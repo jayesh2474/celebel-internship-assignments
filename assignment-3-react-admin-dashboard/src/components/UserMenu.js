@@ -15,10 +15,10 @@ const UserMenu = () => {
       >
         <div className="px-4 py-2 border-b border-gray-200 dark:border-gray-700">
           <p className="text-sm font-medium text-gray-900 dark:text-white">
-            John Doe
+            Jay Joshi
           </p>
           <p className="text-sm text-gray-500 dark:text-gray-400">
-            john.doe@example.com
+            Jay.Joshi@example.com
           </p>
         </div>
         <Link

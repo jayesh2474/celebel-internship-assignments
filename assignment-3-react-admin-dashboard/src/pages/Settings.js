@@ -168,7 +168,7 @@ const Settings = () => {
                   <input
                     type="text"
                     className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white shadow-sm focus:border-primary-500 focus:ring focus:ring-primary-500 focus:ring-opacity-50"
-                    placeholder="John"
+                    placeholder="Jay"
                   />
                 </div>
                 <div>
@@ -178,7 +178,7 @@ const Settings = () => {
                   <input
                     type="text"
                     className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white shadow-sm focus:border-primary-500 focus:ring focus:ring-primary-500 focus:ring-opacity-50"
-                    placeholder="Doe"
+                    placeholder="Joshi"
                   />
                 </div>
                 <div>
@@ -188,7 +188,7 @@ const Settings = () => {
                   <input
                     type="email"
                     className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white shadow-sm focus:border-primary-500 focus:ring focus:ring-primary-500 focus:ring-opacity-50"
-                    placeholder="john.doe@example.com"
+                    placeholder="Jay.Joshi@example.com"
                   />
                 </div>
                 <div>

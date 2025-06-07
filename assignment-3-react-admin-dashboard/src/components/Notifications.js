@@ -5,7 +5,7 @@ const notifications = [
   {
     id: 1,
     title: "New message",
-    message: "You have received a new message from John Doe",
+    message: "You have received a new message from Jay Joshi",
     time: "5 minutes ago",
     read: false,
   },

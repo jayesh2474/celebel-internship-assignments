@@ -16,7 +16,7 @@ const navigation = [
   { name: "Dashboard", to: "/", icon: HomeIcon },
   { name: "Analytics", to: "/charts", icon: ChartBarIcon },
   { name: "Calendar", to: "/calendar", icon: CalendarIcon },
-  { name: "Tables", to: "/tables", icon: TableCellsIcon },
+  { name: "Users", to: "/tables", icon: TableCellsIcon },
   { name: "Kanban", to: "/kanban", icon: ViewColumnsIcon },
   { name: "Settings", to: "/settings", icon: Cog6ToothIcon },
 ];
@@ -72,39 +72,37 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
 
           {/* Navigation */}
           <nav className="flex-1 space-y-1 px-2 py-4 overflow-y-auto">
-            {navigation.map((item) => (
-              <NavLink
-                key={item.name}
-                to={item.to}
-                className={({ isActive }) =>
-                  `group flex items-center px-2 py-2 text-sm font-medium rounded-md transition-colors ${
+            {navigation.map((item) => {
+              const isActive = location.pathname === item.to;
+              return (
+                <NavLink
+                  key={item.name}
+                  to={item.to}
+                  className={`group flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors ${
                     isActive
-                      ? "bg-primary-50 dark:bg-primary-900/50 text-primary-600 dark:text-primary-400"
+                      ? "bg-primary-50 dark:bg-primary-900/30"
                       : "text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700/50"
-                  }`
-                }
-                style={{
-                  "--primary-color": colors.primary,
-                  "--secondary-color": colors.secondary,
-                  "--accent-color": colors.accent,
-                }}
-              >
-                <item.icon
-                  className={`mr-3 h-5 w-5 flex-shrink-0 ${
-                    location.pathname === item.to
-                      ? "text-primary-600 dark:text-primary-400"
-                      : "text-gray-400 dark:text-gray-500 group-hover:text-gray-500 dark:group-hover:text-gray-400"
                   }`}
                   style={{
-                    color:
-                      location.pathname === item.to
-                        ? colors.primary
-                        : undefined,
+                    color: isActive ? colors.primary : undefined,
                   }}
-                />
-                {item.name}
-              </NavLink>
-            ))}
+                >
+                  <item.icon
+                    className={`mr-3 h-5 w-5 flex-shrink-0 ${
+                      isActive
+                        ? "text-primary-600 dark:text-primary-400"
+                        : "text-gray-400 dark:text-gray-500 group-hover:text-gray-500 dark:group-hover:text-gray-400"
+                    }`}
+                    style={{
+                      color: isActive ? colors.primary : undefined,
+                    }}
+                  />
+                  <span className={isActive ? "font-medium" : ""}>
+                    {item.name}
+                  </span>
+                </NavLink>
+              );
+            })}
           </nav>
 
           {/* Footer */}
@@ -119,10 +117,10 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
-                    John Doe
+                    Jay Joshi
                   </p>
                   <p className="text-sm text-gray-500 dark:text-gray-400 truncate">
-                    john@example.com
+                    Jay@example.com
                   </p>
                 </div>
               </div>
