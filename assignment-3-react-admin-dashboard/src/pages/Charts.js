@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   BarChart,
   Bar,
@@ -7,51 +7,62 @@ import {
   PieChart,
   Pie,
   Cell,
+  AreaChart,
+  Area,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
-} from 'recharts';
+  Legend,
+} from "recharts";
 
 const barData = [
-  { name: 'Jan', value: 400 },
-  { name: 'Feb', value: 300 },
-  { name: 'Mar', value: 600 },
-  { name: 'Apr', value: 800 },
-  { name: 'May', value: 500 },
-  { name: 'Jun', value: 700 },
+  { name: "Jan", revenue: 4000 },
+  { name: "Feb", revenue: 3000 },
+  { name: "Mar", revenue: 2000 },
+  { name: "Apr", revenue: 2780 },
+  { name: "May", revenue: 1890 },
+  { name: "Jun", revenue: 2390 },
 ];
 
 const lineData = [
-  { name: 'Jan', value: 400, value2: 240 },
-  { name: 'Feb', value: 300, value2: 139 },
-  { name: 'Mar', value: 600, value2: 980 },
-  { name: 'Apr', value: 800, value2: 390 },
-  { name: 'May', value: 500, value2: 480 },
-  { name: 'Jun', value: 700, value2: 380 },
+  { name: "Jan", sales: 2400 },
+  { name: "Feb", sales: 1398 },
+  { name: "Mar", sales: 9800 },
+  { name: "Apr", sales: 3908 },
+  { name: "May", sales: 4800 },
+  { name: "Jun", sales: 3800 },
 ];
 
 const pieData = [
-  { name: 'Group A', value: 400 },
-  { name: 'Group B', value: 300 },
-  { name: 'Group C', value: 300 },
-  { name: 'Group D', value: 200 },
+  { name: "Group A", value: 400 },
+  { name: "Group B", value: 300 },
+  { name: "Group C", value: 300 },
+  { name: "Group D", value: 200 },
 ];
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+const areaData = [
+  { name: "Jan", growth: 400 },
+  { name: "Feb", growth: 300 },
+  { name: "Mar", growth: 200 },
+  { name: "Apr", growth: 278 },
+  { name: "May", growth: 189 },
+  { name: "Jun", growth: 239 },
+];
 
-const Charts: React.FC = () => {
+const COLORS = ["#4F46E5", "#8B5CF6", "#06B6D4", "#F59E0B"];
+
+const Charts = () => {
   return (
     <div className="space-y-8">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Bar Chart */}
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+        <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6">
           <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
-            Monthly Revenue
+            Monthly Revenue (Bar Chart)
           </h3>
-          <div className="h-80">
+          <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={barData}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -59,18 +70,17 @@ const Charts: React.FC = () => {
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Bar dataKey="value" fill="#8884d8" />
+                <Bar dataKey="revenue" fill="#4F46E5" />
               </BarChart>
             </ResponsiveContainer>
           </div>
         </div>
-
         {/* Line Chart */}
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+        <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6">
           <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
-            Sales Overview
+            Sales Overview (Line Chart)
           </h3>
-          <div className="h-80">
+          <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={lineData}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -80,22 +90,22 @@ const Charts: React.FC = () => {
                 <Legend />
                 <Line
                   type="monotone"
-                  dataKey="value"
-                  stroke="#8884d8"
-                  activeDot={{ r: 8 }}
+                  dataKey="sales"
+                  stroke="#8B5CF6"
+                  strokeWidth={2}
                 />
-                <Line type="monotone" dataKey="value2" stroke="#82ca9d" />
               </LineChart>
             </ResponsiveContainer>
           </div>
         </div>
-
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Pie Chart */}
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+        <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6">
           <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
-            Distribution
+            Distribution (Pie Chart)
           </h3>
-          <div className="h-80">
+          <div className="h-64 flex items-center justify-center">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
@@ -104,7 +114,7 @@ const Charts: React.FC = () => {
                   cy="50%"
                   labelLine={false}
                   label={({ name, percent }) =>
-                    `${name} ${(percent * 100).toFixed(0)}%`
+                    `${name}: ${(percent * 100).toFixed(0)}%`
                   }
                   outerRadius={80}
                   fill="#8884d8"
@@ -123,28 +133,33 @@ const Charts: React.FC = () => {
             </ResponsiveContainer>
           </div>
         </div>
-
         {/* Area Chart */}
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+        <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6">
           <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
-            Growth Trend
+            Growth Trend (Area Chart)
           </h3>
-          <div className="h-80">
+          <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={lineData}>
-                <CartesianGrid strokeDasharray="3 3" />
+              <AreaChart data={areaData}>
+                <defs>
+                  <linearGradient id="colorGrowth" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#06B6D4" stopOpacity={0.8} />
+                    <stop offset="95%" stopColor="#06B6D4" stopOpacity={0} />
+                  </linearGradient>
+                </defs>
                 <XAxis dataKey="name" />
                 <YAxis />
+                <CartesianGrid strokeDasharray="3 3" />
                 <Tooltip />
-                <Legend />
-                <Line
+                <Area
                   type="monotone"
-                  dataKey="value"
-                  stroke="#8884d8"
-                  fill="#8884d8"
-                  fillOpacity={0.3}
+                  dataKey="growth"
+                  stroke="#06B6D4"
+                  fillOpacity={1}
+                  fill="url(#colorGrowth)"
                 />
-              </LineChart>
+                <Legend />
+              </AreaChart>
             </ResponsiveContainer>
           </div>
         </div>
@@ -153,4 +168,4 @@ const Charts: React.FC = () => {
   );
 };
 
-export default Charts; 
+export default Charts;
