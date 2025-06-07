@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTheme } from '../../context/ThemeContext';
-import { Bars3Icon, SunIcon, MoonIcon } from '@heroicons/react/24/outline';
+import { SunIcon, MoonIcon, BellIcon } from '@heroicons/react/24/outline';
+import { Bars3Icon } from '@heroicons/react/24/solid';
 
 interface NavbarProps {
   onMenuClick: () => void;
@@ -16,16 +17,19 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
           <div className="flex items-center">
             <button
               onClick={onMenuClick}
-              className="p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none"
+              className="lg:hidden p-2 rounded-md text-gray-500 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500"
             >
               <Bars3Icon className="h-6 w-6" />
             </button>
+            <div className="hidden lg:flex lg:items-center lg:ml-6">
+              <h1 className="text-xl font-semibold text-gray-900 dark:text-white">Admin Dashboard</h1>
+            </div>
           </div>
-          
-          <div className="flex items-center">
+
+          <div className="flex items-center space-x-4">
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none"
+              className="p-2 rounded-md text-gray-500 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500"
             >
               {theme === 'dark' ? (
                 <SunIcon className="h-6 w-6" />
@@ -33,17 +37,14 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
                 <MoonIcon className="h-6 w-6" />
               )}
             </button>
-            
-            <div className="ml-4 flex items-center md:ml-6">
-              <div className="relative">
-                <button className="flex items-center max-w-xs rounded-full bg-white dark:bg-gray-800 text-sm focus:outline-none">
-                  <span className="sr-only">Open user menu</span>
-                  <img
-                    className="h-8 w-8 rounded-full"
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                    alt=""
-                  />
-                </button>
+
+            <button className="p-2 rounded-md text-gray-500 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500">
+              <BellIcon className="h-6 w-6" />
+            </button>
+
+            <div className="flex items-center">
+              <div className="h-8 w-8 rounded-full bg-primary-600 flex items-center justify-center text-white font-semibold">
+                JD
               </div>
             </div>
           </div>
