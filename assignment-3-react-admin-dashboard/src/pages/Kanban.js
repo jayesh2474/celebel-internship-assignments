@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import {
-  PlusIcon,
-  EllipsisHorizontalIcon,
-  TrashIcon,
-} from "@heroicons/react/24/outline";
+import { PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { useTheme } from "../context/ThemeContext";
 import { useColors } from "../context/ColorContext";
 
@@ -48,7 +44,7 @@ const Kanban = () => {
   const [newTaskContent, setNewTaskContent] = useState("");
   const [activeColumn, setActiveColumn] = useState(null);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(null);
-  const { isDarkMode } = useTheme();
+  useTheme();
   const { colors } = useColors();
 
   const onDragEnd = (result) => {

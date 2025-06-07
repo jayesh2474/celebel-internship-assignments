@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Calendar as BigCalendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import { PlusIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useTheme } from "../context/ThemeContext";
 import { useColors } from "../context/ColorContext";
 
@@ -112,9 +112,9 @@ const Calendar = () => {
   };
 
   return (
-    <div className="p-6">
-      <div className="mb-6">
-        <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">
+    <div className="p-2 sm:p-6">
+      <div className="mb-4 sm:mb-6">
+        <h1 className="text-xl sm:text-2xl font-semibold text-gray-900 dark:text-white">
           Calendar
         </h1>
         <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
@@ -122,14 +122,14 @@ const Calendar = () => {
         </p>
       </div>
 
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
-        <div className={isDarkMode ? "dark-theme" : ""}>
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-2 sm:p-4">
+        <div className={`${isDarkMode ? "dark-theme" : ""} calendar-container`}>
           <BigCalendar
             localizer={localizer}
             events={events}
             startAccessor="start"
             endAccessor="end"
-            style={{ height: "calc(100vh - 200px)" }}
+            style={{ height: "calc(100vh - 180px)", minHeight: "500px" }}
             onSelectEvent={handleEventClick}
             onSelectSlot={handleSelect}
             selectable
@@ -137,8 +137,8 @@ const Calendar = () => {
             className={`${isDarkMode ? "dark-theme" : ""}`}
             components={{
               toolbar: (props) => (
-                <div className="rbc-toolbar dark:bg-gray-800 dark:text-white">
-                  <div className="rbc-btn-group">
+                <div className="rbc-toolbar dark:bg-gray-800 dark:text-white flex flex-col sm:flex-row items-center gap-2 sm:gap-0">
+                  <div className="rbc-btn-group w-full sm:w-auto">
                     {props.views.map((view) => (
                       <button
                         key={view}
@@ -152,10 +152,10 @@ const Calendar = () => {
                       </button>
                     ))}
                   </div>
-                  <div className="rbc-toolbar-label dark:text-white">
+                  <div className="rbc-toolbar-label dark:text-white text-center w-full sm:w-auto">
                     {props.label}
                   </div>
-                  <div className="rbc-btn-group">
+                  <div className="rbc-btn-group w-full sm:w-auto">
                     <button
                       type="button"
                       className="rbc-btn dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600"
@@ -187,7 +187,7 @@ const Calendar = () => {
 
       {showModal && (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
-          <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white dark:bg-gray-800">
+          <div className="relative top-20 mx-auto p-4 sm:p-5 border w-[90%] sm:w-96 shadow-lg rounded-md bg-white dark:bg-gray-800">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-lg font-medium text-gray-900 dark:text-white">
                 {selectedEvent ? "Edit Event" : "Add Event"}

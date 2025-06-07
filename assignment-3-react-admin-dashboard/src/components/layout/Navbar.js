@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useTheme } from "../../context/ThemeContext";
-import { SunIcon, MoonIcon, Bars3Icon } from "@heroicons/react/24/outline";
-import ThemePresets from "../ThemePresets";
+import { Bars3Icon } from "@heroicons/react/24/outline";
 import Notifications from "../Notifications";
 import UserMenu from "../UserMenu";
 
 const Navbar = ({ onMenuClick }) => {
-  const { theme, toggleTheme, isDarkMode } = useTheme();
-  const [showThemePresets, setShowThemePresets] = useState(false);
+  const { toggleTheme, isDarkMode } = useTheme();
+  const [, setShowThemePresets] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const themePresetsRef = useRef(null);
@@ -46,7 +45,7 @@ const Navbar = ({ onMenuClick }) => {
           <div className="flex items-center">
             <button
               onClick={onMenuClick}
-              className="p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500"
+              className="lg:hidden p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500"
             >
               <Bars3Icon className="h-6 w-6" />
             </button>

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
 
 const UserMenu = () => {
-  const { theme } = useTheme();
+  useTheme();
 
   return (
     <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5">
