@@ -15,7 +15,7 @@ const Sidebar = () => (
         Spotify 2.0
       </h1>
     </div>
-    
+
     <nav className="space-y-2">
       {links.map((link) => {
         const Icon = link.icon;
