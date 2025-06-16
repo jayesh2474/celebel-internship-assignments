@@ -34,7 +34,7 @@ const MusicPlayer = () => {
   }, [volume]);
 
   useEffect(() => {
-    if (shuffle) {
+    if (shuffle && currentSongs?.length > 0) {
       const songs = [...currentSongs];
       const currentSong = songs[currentIndex];
       songs.splice(currentIndex, 1);
@@ -50,35 +50,60 @@ const MusicPlayer = () => {
   }, [shuffle, currentSongs, currentIndex]);
 
   const handlePlayPause = () => {
+    if (!activeSong?.title) return;
     dispatch(playPause(!isPlaying));
   };
 
   const handleNextSong = () => {
+    if (!currentSongs?.length) return;
+
     dispatch(playPause(false));
     let nextIndex;
-    if (shuffle) {
-      const currentSongIndex = shuffledSongs.findIndex(song => song.key === activeSong.key);
+    let nextSong;
+
+    if (shuffle && shuffledSongs.length > 0) {
+      const currentSongIndex = shuffledSongs.findIndex(song => song?.key === activeSong?.key);
       nextIndex = (currentSongIndex + 1) % shuffledSongs.length;
-      dispatch(setActiveSong({ song: shuffledSongs[nextIndex], data: shuffledSongs, index: nextIndex }));
+      nextSong = shuffledSongs[nextIndex];
     } else {
       nextIndex = (currentIndex + 1) % currentSongs.length;
-      dispatch(setActiveSong({ song: currentSongs[nextIndex], data: currentSongs, index: nextIndex }));
+      nextSong = currentSongs[nextIndex];
     }
-    dispatch(playPause(true));
+
+    if (nextSong) {
+      dispatch(setActiveSong({ 
+        song: nextSong, 
+        data: shuffle ? shuffledSongs : currentSongs, 
+        index: nextIndex 
+      }));
+      dispatch(playPause(true));
+    }
   };
 
   const handlePrevSong = () => {
+    if (!currentSongs?.length) return;
+
     dispatch(playPause(false));
     let prevIndex;
-    if (shuffle) {
-      const currentSongIndex = shuffledSongs.findIndex(song => song.key === activeSong.key);
+    let prevSong;
+
+    if (shuffle && shuffledSongs.length > 0) {
+      const currentSongIndex = shuffledSongs.findIndex(song => song?.key === activeSong?.key);
       prevIndex = (currentSongIndex - 1 + shuffledSongs.length) % shuffledSongs.length;
-      dispatch(setActiveSong({ song: shuffledSongs[prevIndex], data: shuffledSongs, index: prevIndex }));
+      prevSong = shuffledSongs[prevIndex];
     } else {
       prevIndex = (currentIndex - 1 + currentSongs.length) % currentSongs.length;
-      dispatch(setActiveSong({ song: currentSongs[prevIndex], data: currentSongs, index: prevIndex }));
+      prevSong = currentSongs[prevIndex];
     }
-    dispatch(playPause(true));
+
+    if (prevSong) {
+      dispatch(setActiveSong({ 
+        song: prevSong, 
+        data: shuffle ? shuffledSongs : currentSongs, 
+        index: prevIndex 
+      }));
+      dispatch(playPause(true));
+    }
   };
 
   const handleTimeUpdate = () => {
