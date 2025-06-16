@@ -21,7 +21,7 @@ const SongCard = ({ song, index, handlePlayClick }) => {
 
   return (
     <div 
-      className="group relative bg-[#181818] p-4 rounded-lg hover:bg-[#282828] transition-colors duration-300 cursor-pointer"
+      className="group relative bg-[#181818] p-3 rounded-lg hover:bg-[#282828] transition-colors duration-300 cursor-pointer w-[200px]"
       onClick={() => handlePlayClick(song, index)}
     >
       <div className="relative">
@@ -32,23 +32,23 @@ const SongCard = ({ song, index, handlePlayClick }) => {
           onError={() => setImageError(true)}
         />
         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-          <button className="bg-spotifyGreen text-black p-3 rounded-full shadow-lg transform hover:scale-110 transition-transform">
+          <button className="bg-spotifyGreen text-black p-2 rounded-full shadow-lg transform hover:scale-110 transition-transform">
             {isActive && isPlaying ? (
-              <HiPause className="w-6 h-6" />
+              <HiPause className="w-5 h-5" />
             ) : (
-              <HiPlay className="w-6 h-6" />
+              <HiPlay className="w-5 h-5" />
             )}
           </button>
         </div>
       </div>
       
-      <div className="mt-4">
-        <h3 className="text-white font-medium truncate">{song.title || 'Unknown Title'}</h3>
-        <p className="text-gray-400 text-sm truncate mt-1">{artistName}</p>
+      <div className="mt-2">
+        <h3 className="text-white font-medium truncate text-sm">{song.title || 'Unknown Title'}</h3>
+        <p className="text-gray-400 text-xs truncate mt-0.5">{artistName}</p>
       </div>
 
       {isActive && (
-        <div className="absolute bottom-4 right-4">
+        <div className="absolute bottom-2 right-2">
           <div className="w-2 h-2 bg-spotifyGreen rounded-full animate-pulse" />
         </div>
       )}

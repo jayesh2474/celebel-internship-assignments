@@ -30,7 +30,7 @@ const SongDetails = () => {
       <p className="text-gray-300 text-sm mb-6">{songData?.sections[1]?.text?.join('\n')}</p>
 
       <h3 className="text-xl font-semibold mb-4">Related Songs</h3>
-      <div className="flex flex-wrap gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4">
         {relatedSongs?.map((song, i) => (
           <SongCard 
             key={song.key || `song-${i}-${song.title || 'untitled'}`} 
