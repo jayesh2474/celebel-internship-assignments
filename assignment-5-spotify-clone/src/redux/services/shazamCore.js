@@ -7,7 +7,8 @@ export const deezerApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:5000/deezer",
   }),
-  endpoints: (builder) => ({    getTopCharts: builder.query({
+  endpoints: (builder) => ({
+    getTopCharts: builder.query({
       query: () => "/chart/0/tracks",
       transformResponse: (response) => {
         if (!response || !response.data) return [];
@@ -40,7 +41,8 @@ export const deezerApi = createApi({
           tracks = nextData.data || [];
           nextUrl = nextData.next;
           tries++;
-        }        return tracks
+        }
+        return tracks
           .filter((track) => track.preview)
           .map((track) => ({
             key: track.id,
@@ -56,7 +58,8 @@ export const deezerApi = createApi({
             genre_id: track.genre_id || null,
           }));
       },
-    }),    getSongsByCountry: builder.query({
+    }),
+    getSongsByCountry: builder.query({
       // Deezer does not provide direct country charts for all countries, fallback to global
       query: (countryCode) => "/chart/0/tracks",
       transformResponse: (response) => {
@@ -92,7 +95,8 @@ export const deezerApi = createApi({
     getSongDetails: builder.query({
       query: (songId) => `/track/${songId}`,
       transformResponse: (track) => {
-        if (!track) return null;        return {
+        if (!track) return null;
+        return {
           key: track.id,
           title: track.title,
           subtitle: track.artist?.name,
@@ -109,7 +113,8 @@ export const deezerApi = createApi({
     getSongRelated: builder.query({
       query: (songId) => `/track/${songId}/related`,
       transformResponse: (response) => {
-        if (!response || !response.data) return [];        return response.data.map((track) => ({
+        if (!response || !response.data) return [];
+        return response.data.map((track) => ({
           key: track.id,
           title: track.title,
           subtitle: track.artist?.name,
