@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { HiHeart, HiClock, HiDownload, HiPlay } from 'react-icons/hi';
+import { HiHeart, HiClock, HiPlay } from 'react-icons/hi';
 import { FiMusic, FiMic, FiUsers } from 'react-icons/fi';
 
 const Library = () => {
