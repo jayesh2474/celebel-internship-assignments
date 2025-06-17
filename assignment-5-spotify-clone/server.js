@@ -9,7 +9,9 @@ app.use(cors());
 // Use a regex route to match everything after /deezer/
 app.get(/^\/deezer\/(.*)/, async (req, res) => {
   const deezerPath = req.params[0];
-  const query = req.url.includes("?") ? req.url.slice(req.url.indexOf("?")) : "";
+  const query = req.url.includes("?")
+    ? req.url.slice(req.url.indexOf("?"))
+    : "";
   const deezerUrl = `https://api.deezer.com/${deezerPath}${query}`;
   try {
     const response = await axios.get(deezerUrl);

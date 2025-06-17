@@ -28,20 +28,35 @@ export const deezerApi = createApi({
     }),
     getSongsBySearch: builder.query({
       query: (searchTerm) => `/search?q=${encodeURIComponent(searchTerm)}`,
-      transformResponse: (response) => {
-        if (!response || !response.data) return [];
-        return response.data.map((track) => ({
-          key: track.id,
-          title: track.title,
-          subtitle: track.artist?.name,
-          images: {
-            coverart: track.album?.cover_big,
-            background: track.album?.cover_xl,
-          },
-          preview: track.preview,
-          artists: [track.artist],
-          url: track.link,
-        }));
+      async transformResponse(response, meta, arg) {
+        // If data is empty but total > 0 and next exists, fetch the next page
+        let tracks = response.data || [];
+        let nextUrl = response.next;
+        let tries = 0;
+        while (tracks.length === 0 && nextUrl && tries < 3) {
+          // Remove Deezer's domain from nextUrl for proxy
+          const nextPath = nextUrl.replace("https://api.deezer.com", "");
+          const res = await fetch(`http://localhost:5000/deezer${nextPath}`);
+          const nextData = await res.json();
+          tracks = nextData.data || [];
+          nextUrl = nextData.next;
+          tries++;
+        }
+        return tracks
+          .filter((track) => track.preview)
+          .map((track) => ({
+            key: track.id,
+            title: track.title,
+            subtitle: track.artist?.name,
+            images: {
+              coverart: track.album?.cover_big,
+              background: track.album?.cover_xl,
+            },
+            preview: track.preview,
+            artists: [track.artist],
+            url: track.link,
+            genre_id: track.genre_id || null,
+          }));
       },
     }),
     getSongsByCountry: builder.query({
@@ -113,6 +128,15 @@ export const deezerApi = createApi({
         }));
       },
     }),
+    // Add a genres endpoint for filter options
+    getGenres: builder.query({
+      query: () => "/genre",
+      transformResponse: (response) => {
+        if (!response || !response.data) return [];
+        // Remove the first genre ("All") if present
+        return response.data.filter((g) => g.id !== 0);
+      },
+    }),
   }),
 });
 
@@ -123,4 +147,5 @@ export const {
   useGetArtistDetailsQuery,
   useGetSongDetailsQuery,
   useGetSongRelatedQuery,
+  useGetGenresQuery,
 } = deezerApi;
