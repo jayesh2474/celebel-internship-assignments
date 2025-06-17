@@ -1,201 +1,115 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-// Get API key from environment variable
-const rapidApiKey = process.env.REACT_APP_SHAZAM_CORE_RAPID_API_KEY;
+// Deezer API does not require an API key for public data
 
-// Debug log to check if API key is loaded
-console.log("API Key loaded:", rapidApiKey ? "Yes" : "No");
-
-export const shazamCoreApi = createApi({
-  reducerPath: "shazamCoreApi",
+export const deezerApi = createApi({
+  reducerPath: "deezerApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://shazam-core.p.rapidapi.com/v1",
-    prepareHeaders: (headers) => {
-      headers.set("X-RapidAPI-Key", rapidApiKey);
-      headers.set("X-RapidAPI-Host", "shazam-core.p.rapidapi.com");
-
-      // Debug log for headers
-      console.log("Request headers:", {
-        "X-RapidAPI-Key": rapidApiKey,
-        "X-RapidAPI-Host": "shazam-core.p.rapidapi.com",
-      });
-
-      return headers;
-    },
+    baseUrl: "http://localhost:5000/deezer",
   }),
   endpoints: (builder) => ({
     getTopCharts: builder.query({
-      query: () => {
-        console.log("Fetching top charts...");
-        return {
-          url: "/search/multi",
-          method: "GET",
-          params: {
-            search_type: "SONGS_ARTISTS",
-            query: "top hits",
-          },
-        };
-      },
+      query: () => "/chart/0/tracks",
       transformResponse: (response) => {
-        console.log("Top charts response:", response);
-        if (!response || !response.tracks || !response.tracks.hits) {
-          console.warn("Invalid response format:", response);
-          return [];
-        }
-        // Transform the hits array into the format our components expect
-        return response.tracks.hits.map((hit) => ({
-          key: hit.track.key,
-          title: hit.track.title,
-          subtitle: hit.track.subtitle,
+        if (!response || !response.data) return [];
+        return response.data.map((track) => ({
+          key: track.id,
+          title: track.title,
+          subtitle: track.artist?.name,
           images: {
-            coverart: hit.track.images?.coverart || hit.track.share?.image,
-            background: hit.track.images?.background || hit.track.share?.image,
+            coverart: track.album?.cover_big,
+            background: track.album?.cover_xl,
           },
-          hub: hit.track.hub,
-          artists: hit.track.artists,
-          url: hit.track.url,
+          preview: track.preview,
+          artists: [track.artist],
+          url: track.link,
         }));
-      },
-      transformErrorResponse: (response) => {
-        console.error("API Error:", response);
-        return response;
       },
     }),
     getSongsBySearch: builder.query({
-      query: (searchTerm) => ({
-        url: "/search/multi",
-        method: "GET",
-        params: {
-          search_type: "SONGS_ARTISTS",
-          query: searchTerm,
-        },
-      }),
+      query: (searchTerm) => `/search?q=${encodeURIComponent(searchTerm)}`,
       transformResponse: (response) => {
-        if (!response || !response.tracks || !response.tracks.hits) {
-          return [];
-        }
-        return response.tracks.hits.map((hit) => ({
-          key: hit.track.key,
-          title: hit.track.title,
-          subtitle: hit.track.subtitle,
+        if (!response || !response.data) return [];
+        return response.data.map((track) => ({
+          key: track.id,
+          title: track.title,
+          subtitle: track.artist?.name,
           images: {
-            coverart: hit.track.images?.coverart || hit.track.share?.image,
-            background: hit.track.images?.background || hit.track.share?.image,
+            coverart: track.album?.cover_big,
+            background: track.album?.cover_xl,
           },
-          hub: hit.track.hub,
-          artists: hit.track.artists,
-          url: hit.track.url,
+          preview: track.preview,
+          artists: [track.artist],
+          url: track.link,
         }));
       },
     }),
     getSongsByCountry: builder.query({
-      query: (countryCode) => ({
-        url: "/search/multi",
-        method: "GET",
-        params: {
-          search_type: "SONGS_ARTISTS",
-          query: `top hits ${countryCode}`,
-        },
-      }),
+      // Deezer does not provide direct country charts for all countries, fallback to global
+      query: (countryCode) => "/chart/0/tracks",
       transformResponse: (response) => {
-        if (!response || !response.tracks || !response.tracks.hits) {
-          return [];
-        }
-        return response.tracks.hits.map((hit) => ({
-          key: hit.track.key,
-          title: hit.track.title,
-          subtitle: hit.track.subtitle,
+        if (!response || !response.data) return [];
+        return response.data.map((track) => ({
+          key: track.id,
+          title: track.title,
+          subtitle: track.artist?.name,
           images: {
-            coverart: hit.track.images?.coverart || hit.track.share?.image,
-            background: hit.track.images?.background || hit.track.share?.image,
+            coverart: track.album?.cover_big,
+            background: track.album?.cover_xl,
           },
-          hub: hit.track.hub,
-          artists: hit.track.artists,
-          url: hit.track.url,
+          preview: track.preview,
+          artists: [track.artist],
+          url: track.link,
         }));
       },
     }),
     getArtistDetails: builder.query({
-      query: (artistId) => ({
-        url: "/search/multi",
-        method: "GET",
-        params: {
-          search_type: "ARTISTS",
-          query: artistId,
-        },
-      }),
-      transformResponse: (response) => {
-        if (!response || !response.artists || !response.artists.hits) {
-          return null;
-        }
-        const artist = response.artists.hits[0]?.artist;
+      query: (artistId) => `/artist/${artistId}`,
+      transformResponse: (artist) => {
         if (!artist) return null;
-
         return {
-          id: artist.adamid,
+          id: artist.id,
           name: artist.name,
-          alias: artist.alias,
-          image: artist.avatar || artist.artwork,
-          genres: artist.genres?.primary || [],
-          bio: artist.bio || "",
-          url: artist.url,
+          image: artist.picture_xl || artist.picture_big,
+          genres: artist.genres?.data?.map((g) => g.name) || [],
+          nb_fan: artist.nb_fan,
+          url: artist.link,
         };
       },
     }),
     getSongDetails: builder.query({
-      query: (songId) => ({
-        url: "/search/multi",
-        method: "GET",
-        params: {
-          search_type: "SONGS",
-          query: songId,
-        },
-      }),
-      transformResponse: (response) => {
-        if (!response || !response.tracks || !response.tracks.hits) {
-          return null;
-        }
-        const track = response.tracks.hits[0]?.track;
+      query: (songId) => `/track/${songId}`,
+      transformResponse: (track) => {
         if (!track) return null;
-
         return {
-          key: track.key,
+          key: track.id,
           title: track.title,
-          subtitle: track.subtitle,
+          subtitle: track.artist?.name,
           images: {
-            coverart: track.images?.coverart || track.share?.image,
-            background: track.images?.background || track.share?.image,
+            coverart: track.album?.cover_big,
+            background: track.album?.cover_xl,
           },
-          hub: track.hub,
-          artists: track.artists,
-          url: track.url,
+          preview: track.preview,
+          artists: [track.artist],
+          url: track.link,
         };
       },
     }),
     getSongRelated: builder.query({
-      query: (songId) => ({
-        url: "/search/multi",
-        method: "GET",
-        params: {
-          search_type: "SONGS",
-          query: songId,
-        },
-      }),
+      query: (songId) => `/track/${songId}/related`,
       transformResponse: (response) => {
-        if (!response || !response.tracks || !response.tracks.hits) {
-          return [];
-        }
-        return response.tracks.hits.map((hit) => ({
-          key: hit.track.key,
-          title: hit.track.title,
-          subtitle: hit.track.subtitle,
+        if (!response || !response.data) return [];
+        return response.data.map((track) => ({
+          key: track.id,
+          title: track.title,
+          subtitle: track.artist?.name,
           images: {
-            coverart: hit.track.images?.coverart || hit.track.share?.image,
-            background: hit.track.images?.background || hit.track.share?.image,
+            coverart: track.album?.cover_big,
+            background: track.album?.cover_xl,
           },
-          hub: hit.track.hub,
-          artists: hit.track.artists,
-          url: hit.track.url,
+          preview: track.preview,
+          artists: [track.artist],
+          url: track.link,
         }));
       },
     }),
@@ -209,4 +123,4 @@ export const {
   useGetArtistDetailsQuery,
   useGetSongDetailsQuery,
   useGetSongRelatedQuery,
-} = shazamCoreApi;
+} = deezerApi;

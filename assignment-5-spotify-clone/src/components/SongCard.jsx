@@ -8,15 +8,12 @@ const SongCard = ({ song, index, handlePlayClick }) => {
   const [imageError, setImageError] = useState(false);
 
   // Get the first artist name if available
-  const artistName = song.artists?.[0]?.alias || song.subtitle || 'Unknown Artist';
+  const artistName = song.artists?.[0]?.name || song.subtitle || 'Unknown Artist';
 
   // Get the best available image URL
   const getImageUrl = () => {
     if (imageError) return 'https://via.placeholder.com/300';
-    return song.images?.coverart || 
-           song.images?.background || 
-           song.share?.image || 
-           'https://via.placeholder.com/300';
+    return song.images?.coverart || song.images?.background || 'https://via.placeholder.com/300';
   };
 
   return (

@@ -14,8 +14,8 @@ const Search = () => {
     <div className="text-white px-6 py-4 ml-60">
       <h2 className="text-3xl font-bold mb-6">Search Results for "{term}"</h2>
       <div className="flex flex-wrap gap-6">
-        {data?.tracks?.hits?.map(({ track }, i) => (
-          <SongCard key={track.key} song={track} index={i} />
+        {Array.isArray(data) && data.map((song, i) => (
+          <SongCard key={song.key || `song-${i}-${song.title || 'untitled'}`} song={song} index={i} />
         ))}
       </div>
     </div>

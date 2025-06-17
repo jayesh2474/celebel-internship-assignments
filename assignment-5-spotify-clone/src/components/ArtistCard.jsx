@@ -7,10 +7,10 @@ const ArtistCard = ({ artist }) => {
   return (
     <div
       className="flex flex-col items-center bg-[#1e1e1e] p-4 rounded-lg cursor-pointer hover:bg-[#282828]"
-      onClick={() => navigate(`/artists/${artist?.adamid}`)}
+      onClick={() => navigate(`/artists/${artist?.id}`)}
     >
       <img
-        src={artist?.images?.background}
+        src={artist?.picture_xl || artist?.picture_big || 'https://via.placeholder.com/300'}
         alt="artist"
         className="w-32 h-32 rounded-full object-cover"
       />

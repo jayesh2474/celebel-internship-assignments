@@ -30,7 +30,9 @@ const MusicPlayer = () => {
   }, [isPlaying, activeSong]);
 
   useEffect(() => {
-    audioRef.current.volume = volume;
+    if (audioRef.current) {
+      audioRef.current.volume = volume;
+    }
   }, [volume]);
 
   useEffect(() => {
@@ -259,10 +261,9 @@ const MusicPlayer = () => {
           </div>
         </div>
       </div>
-
       <audio
         ref={audioRef}
-        src={activeSong?.hub?.actions?.[1]?.uri}
+        src={activeSong?.preview}
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleLoadedMetadata}
         onEnded={handleNextSong}
