@@ -85,7 +85,7 @@ const App = () => {
         </div>
 
         {/* Mobile Content */}
-        <div className="flex-1 overflow-y-auto pb-32">
+        <div className="flex-1 overflow-y-auto pb-40">
           <div className="px-4 py-2">
             <Routes>
               <Route path="/" element={<Discover />} />
@@ -101,7 +101,7 @@ const App = () => {
         </div>
 
         {/* Mobile Bottom Navigation */}
-        <div className="fixed bottom-16 left-0 right-0 z-40 bg-black/95 backdrop-blur-xl border-t border-gray-800/50">
+        <div className="fixed bottom-0 left-0 right-0 z-30 bg-black/95 backdrop-blur-xl border-t border-gray-800/50">
           <div className="flex items-center justify-around py-2">
             {mobileNavItems.map((item) => {
               const Icon = item.icon;
@@ -138,9 +138,7 @@ const App = () => {
       </div>
 
       {/* Music Player - Both Mobile and Desktop */}
-      <div className="fixed bottom-0 left-0 right-0 z-50">
-        <MusicPlayer />
-      </div>
+      <MusicPlayer />
 
       {/* Custom Scrollbar Styles */}
       <style jsx global>{`

@@ -150,10 +150,9 @@ const MusicPlayer = () => {
   const handleRepeat = () => {
     setRepeat(!repeat);
   };
-
   if (!activeSong?.title) return null;
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-black via-gray-900/95 to-gray-900/90 backdrop-blur-xl border-t border-white/10 z-50">
+    <div className="fixed bottom-16 lg:bottom-0 left-0 right-0 bg-gradient-to-t from-black via-gray-900/95 to-gray-900/90 backdrop-blur-xl border-t border-white/10 z-40">
       {/* Progress Bar at Top */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-gray-700/50">
         <div 
