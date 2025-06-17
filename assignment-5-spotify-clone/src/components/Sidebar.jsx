@@ -1,11 +1,11 @@
-import { NavLink } from 'react-router-dom';
-import { HiHome, HiChartBar, HiUserGroup, HiGlobeAlt, HiHeart, HiPlus, HiDownload } from 'react-icons/hi';
-import { FiMusic, FiRadio } from 'react-icons/fi';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { HiHome, HiChartBar, HiUserGroup, HiGlobeAlt, HiHeart, HiSearch, HiCollection } from 'react-icons/hi';
+import { FiMusic, FiTrendingUp } from 'react-icons/fi';
 
 const links = [
   { name: 'Home', to: '/', icon: HiHome },
-  { name: 'Search', to: '/search/trending', icon: 'search' },
-  { name: 'Your Library', to: '/library', icon: 'library' },
+  { name: 'Search', to: '/search/trending', icon: HiSearch },
+  { name: 'Your Library', to: '/library', icon: HiCollection },
 ];
 
 const browseLinks = [
@@ -13,117 +13,132 @@ const browseLinks = [
   { name: 'Top Charts', to: '/top-charts', icon: HiChartBar },
   { name: 'Top Artists', to: '/top-artists', icon: HiUserGroup },
   { name: 'Around You', to: '/around-you', icon: HiGlobeAlt },
-  { name: 'Radio', to: '/radio', icon: FiRadio },
+  { name: 'Trending', to: '/search/trending%20music', icon: FiTrendingUp },
 ];
 
-const playlists = [
-  'Liked Songs',
-  'Recently Played',
-  'Downloaded Music',
-  'My Playlist #1',
-  'Chill Vibes',
-  'Workout Mix',
-  'Road Trip Songs'
-];
+const Sidebar = () => {
+  const navigate = useNavigate();
 
-const Sidebar = () => (
-  <div className="fixed left-0 top-0 h-screen w-60 bg-black flex flex-col">
-    {/* Logo */}
-    <div className="p-6">
-      <h1 className="text-2xl font-bold text-white flex items-center gap-2">
-        <div className="w-8 h-8 bg-spotifyGreen rounded-full flex items-center justify-center">
-          <FiMusic className="text-black text-lg" />
-        </div>
-        Spotify
-      </h1>
-    </div>
+  const handleLikedSongs = () => {
+    // Navigate to search with a query that might show popular songs
+    navigate('/search/popular%20hits');
+  };
 
-    {/* Main Navigation */}
-    <nav className="px-6 space-y-2">
-      {links.map((link) => {
-        const Icon = link.icon === 'search' ? 
-          () => <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" /></svg> :
-          link.icon === 'library' ?
-          () => <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z" /></svg> :
-          link.icon;
-        
-        return (
-          <NavLink
-            key={link.name}
-            to={link.to}
-            className={({ isActive }) =>
-              `flex items-center gap-4 px-4 py-3 rounded-md transition-all duration-200 text-gray-300 hover:text-white ${
-                isActive ? 'bg-gray-800 text-white' : 'hover:bg-gray-800/50'
-              }`
-            }
-          >
-            <Icon className="w-6 h-6" />
-            <span className="font-medium">{link.name}</span>
-          </NavLink>
-        );
-      })}
-    </nav>
+  return (
+    <div className="fixed left-0 top-0 h-screen w-60 bg-gradient-to-b from-black to-gray-900 flex flex-col border-r border-white/5">
+      {/* Logo */}
+      <div className="p-6">
+        <h1 className="text-2xl font-bold text-white flex items-center gap-2">
+          <div className="w-8 h-8 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full flex items-center justify-center shadow-lg">
+            <FiMusic className="text-black text-lg" />
+          </div>
+          Spotify
+        </h1>
+      </div>
 
-    <div className="px-6 mt-6">
-      <button className="flex items-center gap-3 text-gray-400 hover:text-white transition-colors">
-        <HiPlus className="w-5 h-5" />
-        <span className="text-sm font-medium">Create Playlist</span>
-      </button>
-      <button className="flex items-center gap-3 text-gray-400 hover:text-white transition-colors mt-3">
-        <HiHeart className="w-5 h-5" />
-        <span className="text-sm font-medium">Liked Songs</span>
-      </button>
-    </div>
-
-    {/* Browse Section */}
-    <div className="px-6 mt-8">
-      <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4">Browse</h3>
-      <nav className="space-y-1">
-        {browseLinks.map((link) => {
+      {/* Main Navigation */}
+      <nav className="px-6 space-y-2">
+        {links.map((link) => {
           const Icon = link.icon;
+          
           return (
             <NavLink
               key={link.name}
               to={link.to}
               className={({ isActive }) =>
-                `flex items-center gap-3 px-3 py-2 rounded-md transition-all duration-200 text-sm ${
+                `flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300 text-gray-300 hover:text-white group ${
                   isActive 
-                    ? 'bg-gray-800 text-white' 
-                    : 'text-gray-400 hover:text-white hover:bg-gray-800/50'
+                    ? 'bg-gradient-to-r from-green-500/20 to-emerald-500/10 text-green-400 border border-green-500/30' 
+                    : 'hover:bg-white/5 hover:bg-gradient-to-r hover:from-green-500/5 hover:to-emerald-500/5'
                 }`
               }
             >
-              <Icon className="w-4 h-4" />
+              <Icon className="w-6 h-6 group-hover:scale-110 transition-transform duration-300" />
               <span className="font-medium">{link.name}</span>
             </NavLink>
           );
         })}
       </nav>
-    </div>
 
-    {/* Playlists */}
-    <div className="px-6 mt-8 flex-1 overflow-y-auto">
-      <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4">Playlists</h3>
-      <div className="space-y-1">
-        {playlists.map((playlist, index) => (
-          <button
-            key={index}
-            className="block w-full text-left px-3 py-2 text-sm text-gray-400 hover:text-white transition-colors rounded-md hover:bg-gray-800/50"
-          >
-            {playlist}
+      {/* Quick Access */}
+      <div className="px-6 mt-6">
+        <button 
+          onClick={handleLikedSongs}
+          className="flex items-center gap-3 w-full text-gray-400 hover:text-red-400 transition-all duration-300 p-3 rounded-xl hover:bg-red-500/10 group"
+        >
+          <HiHeart className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
+          <span className="text-sm font-medium">Popular Songs</span>
+        </button>
+      </div>
+
+      {/* Browse Section */}
+      <div className="px-6 mt-8">
+        <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4 flex items-center gap-2">
+          <div className="w-4 h-0.5 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full"></div>
+          Browse Music
+        </h3>
+        <nav className="space-y-1">
+          {browseLinks.map((link) => {
+            const Icon = link.icon;
+            return (
+              <NavLink
+                key={link.name}
+                to={link.to}
+                className={({ isActive }) =>
+                  `flex items-center gap-3 px-3 py-2 rounded-xl transition-all duration-300 text-sm group ${
+                    isActive 
+                      ? 'bg-gradient-to-r from-green-500/15 to-emerald-500/5 text-green-400 border-l-2 border-green-400' 
+                      : 'text-gray-400 hover:text-white hover:bg-white/5'
+                  }`
+                }
+              >
+                <Icon className="w-4 h-4 group-hover:scale-110 transition-transform duration-300" />
+                <span className="font-medium">{link.name}</span>
+              </NavLink>
+            );
+          })}
+        </nav>
+      </div>
+
+      {/* Music Categories */}
+      <div className="px-6 mt-8 flex-1 overflow-y-auto">
+        <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4 flex items-center gap-2">
+          <div className="w-4 h-0.5 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full"></div>
+          Genres
+        </h3>
+        <div className="space-y-1">
+          {[
+            'Pop Music',
+            'Hip-Hop',
+            'Rock',
+            'Electronic',
+            'R&B',
+            'Jazz',
+            'Classical'
+          ].map((genre, index) => (
+            <button
+              key={index}
+              onClick={() => navigate(`/search/${encodeURIComponent(genre.toLowerCase())}`)}
+              className="block w-full text-left px-3 py-2 text-sm text-gray-400 hover:text-white transition-all duration-300 rounded-xl hover:bg-white/5 group"
+            >
+              <span className="group-hover:ml-1 transition-all duration-300">{genre}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Bottom section with enhanced design */}
+      <div className="p-6 border-t border-white/10">
+        <div className="bg-gradient-to-r from-green-500/10 to-emerald-500/10 p-4 rounded-xl border border-green-500/20">
+          <h4 className="text-white font-semibold text-sm mb-1">Premium Features</h4>
+          <p className="text-gray-400 text-xs mb-3">Enjoy ad-free music with better quality</p>
+          <button className="w-full bg-gradient-to-r from-green-500 to-emerald-600 text-black font-semibold py-2 px-4 rounded-lg text-sm hover:from-green-400 hover:to-emerald-500 transition-all duration-300 hover:scale-105">
+            Upgrade Now
           </button>
-        ))}
+        </div>
       </div>
     </div>
-
-    {/* Bottom section */}
-    <div className="p-6 border-t border-gray-800">
-      <button className="flex items-center gap-3 text-gray-400 hover:text-white transition-colors text-sm">
-        <HiDownload className="w-4 h-4" />
-        <span className="font-medium">Install App</span>
-      </button>
-    </div>
-  </div>
-);
+  );
+};
 
 export default Sidebar;

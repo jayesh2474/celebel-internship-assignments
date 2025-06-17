@@ -9,6 +9,7 @@ import {
   ArtistDetails,
   SongDetails,
   Search,
+  Library,
 } from "./pages";
 
 const App = () => (
@@ -33,6 +34,7 @@ const App = () => (
             <div className="p-8 max-w-[1800px] mx-auto">
               <Routes>
                 <Route path="/" element={<Discover />} />
+                <Route path="/library" element={<Library />} />
                 <Route path="/around-you" element={<AroundYou />} />
                 <Route path="/top-artists" element={<TopArtists />} />
                 <Route path="/top-charts" element={<TopCharts />} />

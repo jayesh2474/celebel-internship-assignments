@@ -12,9 +12,11 @@ const MusicPlayer = () => {
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [repeat, setRepeat] = useState(false);
-  const [shuffle, setShuffle] = useState(false);  const [isLiked, setIsLiked] = useState(false);
+  const [shuffle, setShuffle] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
   const [showVolume, setShowVolume] = useState(false);
   const [shuffledSongs, setShuffledSongs] = useState([]);
+  const [audioError, setAudioError] = useState(false);
 
   useEffect(() => {
     if (isPlaying) {
@@ -106,9 +108,18 @@ const MusicPlayer = () => {
   const handleTimeUpdate = () => {
     setCurrentTime(audioRef.current.currentTime);
   };
-
   const handleLoadedMetadata = () => {
     setDuration(audioRef.current.duration);
+    setAudioError(false);
+  };
+
+  const handleAudioError = () => {
+    console.error('Audio failed to load:', activeSong?.preview);
+    setAudioError(true);
+  };
+
+  const handleCanPlay = () => {
+    setAudioError(false);
   };
 
   const handleSeek = (e) => {
@@ -339,18 +350,33 @@ const MusicPlayer = () => {
             )}
           </div>
         </div>
-      </div>
-
-      {/* Audio Element */}
+      </div>      {/* Audio Element */}
       <audio
         ref={audioRef}
         src={activeSong?.preview}
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleLoadedMetadata}
         onEnded={handleNextSong}
+        onError={handleAudioError}
+        onCanPlay={handleCanPlay}
         loop={repeat}
         preload="metadata"
+        crossOrigin="anonymous"
       />
+      
+      {/* Debug info for development */}
+      {process.env.NODE_ENV === 'development' && audioError && (
+        <div className="absolute top-0 left-0 bg-red-500 text-white p-2 text-xs z-50">
+          Audio Error: {activeSong?.preview || 'No preview URL'}
+        </div>
+      )}
+      
+      {/* Fallback message when no audio is available */}
+      {audioError && (
+        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 bg-yellow-600/90 text-white px-4 py-2 rounded-b-lg text-sm z-40">
+          Audio preview not available for this track
+        </div>
+      )}
     </div>
   );
 };
