@@ -152,7 +152,6 @@ const MusicPlayer = () => {
   };
 
   if (!activeSong?.title) return null;
-
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-black via-gray-900/95 to-gray-900/90 backdrop-blur-xl border-t border-white/10 z-50">
       {/* Progress Bar at Top */}
@@ -171,7 +170,69 @@ const MusicPlayer = () => {
         />
       </div>
 
-      <div className="flex items-center justify-between px-6 py-4">
+      {/* Mobile Layout */}
+      <div className="block lg:hidden px-4 py-3">
+        <div className="flex items-center justify-between">
+          {/* Left - Song Info */}
+          <div className="flex items-center space-x-3 flex-1 min-w-0">
+            <img
+              src={activeSong?.images?.coverart || activeSong?.images?.background || activeSong?.album?.cover_medium || '/api/placeholder/48/48'}
+              alt={activeSong?.title}
+              className="w-12 h-12 rounded-lg shadow-lg"
+            />
+            <div className="flex flex-col min-w-0 flex-1">
+              <h4 className="text-white font-medium truncate text-sm">
+                {activeSong?.title}
+              </h4>
+              <p className="text-gray-400 text-xs truncate">
+                {activeSong?.subtitle || activeSong?.artist?.name || 'Unknown Artist'}
+              </p>
+            </div>
+          </div>
+
+          {/* Right - Controls */}
+          <div className="flex items-center space-x-1">
+            <button
+              onClick={handleLike}
+              className="p-2 text-gray-400 hover:text-white transition-colors"
+            >
+              {isLiked ? (
+                <HiHeart className="w-5 h-5 text-red-500" />
+              ) : (
+                <HiOutlineHeart className="w-5 h-5" />
+              )}
+            </button>
+            
+            <button
+              onClick={handlePrevSong}
+              className="p-2 text-gray-400 hover:text-white transition-colors"
+            >
+              <FiSkipBack className="w-5 h-5" />
+            </button>
+            
+            <button
+              onClick={handlePlayPause}
+              className="p-2 rounded-full bg-white text-black hover:scale-105 transition-all duration-200 mx-1"
+            >
+              {isPlaying ? (
+                <HiPause className="w-6 h-6" />
+              ) : (
+                <HiPlay className="w-6 h-6 ml-0.5" />
+              )}
+            </button>
+            
+            <button
+              onClick={handleNextSong}
+              className="p-2 text-gray-400 hover:text-white transition-colors"
+            >
+              <FiSkipForward className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Desktop Layout */}
+      <div className="hidden lg:flex items-center justify-between px-6 py-4">
         {/* Left Section - Song Info with Enhanced Design */}
         <div className="flex items-center space-x-4 w-[30%] min-w-[200px]">
           <div className="relative group">
@@ -346,8 +407,7 @@ const MusicPlayer = () => {
                 <div className="text-center mt-2 text-xs text-gray-400">
                   {Math.round(volume * 100)}%
                 </div>
-              </div>
-            )}
+              </div>            )}
           </div>
         </div>
       </div>      {/* Audio Element */}

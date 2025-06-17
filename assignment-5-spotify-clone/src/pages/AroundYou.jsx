@@ -25,12 +25,20 @@ const AroundYou = () => {
   if (error) return <Error message="Error loading songs. Please try again later." />;
   if (!data || !Array.isArray(data) || data.length === 0) {
     return <Error message="No songs found in your region." />;
-  }
+  }  return (
+    <div className="flex flex-col text-white px-3 sm:px-4 md:px-8 max-w-7xl mx-auto">
+      {/* Header */}
+      <div className="mb-6 sm:mb-8">
+        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-white via-green-200 to-green-400 bg-clip-text text-transparent mb-2">
+          Around You
+        </h2>
+        <p className="text-gray-400 text-sm sm:text-base">
+          Popular songs in {country === 'IN' ? 'India' : country}
+        </p>
+      </div>
 
-  return (
-    <div className="flex flex-col text-white px-6 py-4 ml-60">
-      <h2 className="text-3xl font-bold mb-6">Around You - {country}</h2>
-      <div className="flex flex-wrap gap-6">
+      {/* Songs Grid */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4 md:gap-6">
         {data.map((song, index) => {
           // Ensure we have a unique key even if song.key is undefined
           const uniqueKey = song.key || `song-${index}-${song.title || 'untitled'}`;

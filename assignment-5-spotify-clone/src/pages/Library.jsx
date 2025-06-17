@@ -39,21 +39,19 @@ const Library = () => {
       action: () => navigate('/'),
       tracks: '100+ songs'
     }
-  ];
-
-  return (
-    <div className="text-white">
+  ];  return (
+    <div className="text-white px-3 sm:px-4 md:px-8 max-w-7xl mx-auto">
       {/* Header */}
-      <div className="mb-8">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="p-3 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl">
+      <div className="mb-6 sm:mb-8">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mb-4">
+          <div className="p-3 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl mb-2 sm:mb-0">
             <FiUsers className="w-6 h-6 text-white" />
           </div>
           <div>
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-white via-purple-200 to-purple-400 bg-clip-text text-transparent">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-white via-purple-200 to-purple-400 bg-clip-text text-transparent">
               Your Music Library
             </h1>
-            <p className="text-gray-400 text-lg">
+            <p className="text-gray-400 text-base sm:text-lg">
               Your personal music collection and recommendations
             </p>
           </div>
@@ -61,7 +59,7 @@ const Library = () => {
       </div>
 
       {/* Quick Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
         <div className="bg-gradient-to-br from-green-500/20 to-emerald-500/10 p-6 rounded-2xl border border-green-500/20">
           <div className="flex items-center justify-between mb-2">
             <h3 className="text-green-400 font-semibold">Total Tracks</h3>
@@ -91,13 +89,12 @@ const Library = () => {
       </div>
 
       {/* Library Categories */}
-      <div className="mb-8">
-        <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
+      <div className="mb-6 sm:mb-8">
+        <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 flex items-center gap-2">
           <div className="w-1 h-6 bg-gradient-to-b from-purple-400 to-pink-500 rounded-full"></div>
           Browse Your Music
         </h2>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6">
           {libraryCategories.map((category, index) => {
             const Icon = category.icon;
             return (
@@ -140,12 +137,11 @@ const Library = () => {
 
       {/* Recent Activity */}
       <div>
-        <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
+        <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 flex items-center gap-2">
           <div className="w-1 h-6 bg-gradient-to-b from-green-400 to-emerald-500 rounded-full"></div>
           Quick Access
         </h2>
-        
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 sm:gap-4">
           {[
             { name: 'Top Charts', path: '/top-charts', color: 'from-yellow-500 to-orange-600' },
             { name: 'New Releases', path: '/search/new%20music', color: 'from-green-500 to-emerald-600' },

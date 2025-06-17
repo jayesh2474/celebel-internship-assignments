@@ -86,40 +86,37 @@ const TopArtists = () => {
   };
 
   if (isFetching) return <Loader title="Loading top artists..." />;
-
   return (
-    <div className="flex flex-col text-white">
+    <div className="flex flex-col text-white px-3 sm:px-4 md:px-8 max-w-7xl mx-auto w-full">
       {/* Hero Section */}
-      <div className="relative mb-8 p-8 bg-gradient-to-br from-purple-900/40 via-blue-900/30 to-transparent rounded-3xl border border-white/5 overflow-hidden">
+      <div className="relative mb-4 sm:mb-6 md:mb-8 p-3 sm:p-6 md:p-8 bg-gradient-to-br from-blue-900/40 via-purple-900/30 to-transparent rounded-2xl sm:rounded-3xl border border-white/5 overflow-hidden">
         {/* Animated background elements */}
         <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-purple-500/10 to-transparent rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-blue-500/10 to-transparent rounded-full blur-3xl"></div>
         
         <div className="relative z-10">
-          <div className="flex items-center justify-between mb-6">
-            <div>
-              <div className="flex items-center gap-3 mb-2">
-                <div className="p-3 bg-gradient-to-br from-purple-500 to-blue-600 rounded-xl">
-                  <HiUsers className="w-7 h-7 text-white" />
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 sm:mb-6">
+            <div className="mb-4 sm:mb-0">
+              <div className="flex items-center gap-2 sm:gap-3 mb-2">
+                <div className="p-2 sm:p-3 bg-gradient-to-br from-purple-500 to-blue-600 rounded-xl">
+                  <HiUsers className="w-5 h-5 sm:w-7 sm:h-7 text-white" />
                 </div>
-                <h1 className="text-5xl font-bold bg-gradient-to-r from-white via-purple-200 to-purple-400 bg-clip-text text-transparent">
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-white via-purple-200 to-purple-400 bg-clip-text text-transparent">
                   Top Artists
                 </h1>
               </div>
-              <p className="text-gray-300 text-lg">
+              <p className="text-gray-300 text-sm sm:text-base lg:text-lg">
                 The most popular artists right now • {artists.length} artists
               </p>
             </div>
-          </div>
-
-          {/* Top 3 Featured Artists */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          </div>          {/* Top 3 Featured Artists */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6">
             {artists.slice(0, 3).map((artist, index) => (
               <div
                 key={artist.id}
-                className="group relative p-6 bg-gradient-to-br from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 rounded-2xl border border-white/10 cursor-pointer transition-all duration-300 hover:scale-105"
+                className="group relative p-3 sm:p-4 md:p-6 bg-gradient-to-br from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 rounded-2xl border border-white/10 cursor-pointer transition-all duration-300 hover:scale-105"
               >
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-3 sm:gap-4">
                   <div className="flex-shrink-0">
                     {getRankIcon(index)}
                   </div>
@@ -127,17 +124,17 @@ const TopArtists = () => {
                     <img
                       src={artist.picture_xl || artist.picture_big || '/api/placeholder/64/64'}
                       alt={artist.name}
-                      className="w-16 h-16 rounded-full object-cover shadow-lg"
+                      className="w-12 h-12 sm:w-16 sm:h-16 rounded-full object-cover shadow-lg"
                     />
                     <div className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <HiPlay className="w-5 h-5 text-white ml-0.5" />
+                      <HiPlay className="w-4 h-4 sm:w-5 sm:h-5 text-white ml-0.5" />
                     </div>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h3 className="font-bold text-lg truncate text-white group-hover:text-purple-400 transition-colors duration-300">
+                    <h3 className="font-bold text-base sm:text-lg truncate text-white group-hover:text-purple-400 transition-colors duration-300">
                       {artist.name}
                     </h3>
-                    <p className="text-sm text-gray-400">
+                    <p className="text-xs sm:text-sm text-gray-400">
                       {formatFollowers(artist.nb_fan)} followers
                     </p>
                     <p className="text-xs text-gray-500">
@@ -149,28 +146,27 @@ const TopArtists = () => {
             ))}
           </div>
         </div>
-      </div>
-
-      {/* Controls */}
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-3">
-            <HiSparkles className="w-5 h-5 text-purple-400" />
-            <h2 className="text-2xl font-bold">All Artists</h2>
+      </div>      {/* Controls */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 mb-4 sm:mb-6">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <HiSparkles className="w-4 h-4 sm:w-5 sm:h-5 text-purple-400" />
+            <h2 className="text-xl sm:text-2xl font-bold">All Artists</h2>
           </div>
           
           <button
             onClick={() => setShowFilters(!showFilters)}
-            className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-300 ${
+            className={`flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2 rounded-full text-sm transition-all duration-300 ${
               showFilters ? 'bg-white/20 text-white' : 'bg-white/5 hover:bg-white/10 text-gray-300'
             }`}
           >
             <FiFilter className="w-4 h-4" />
-            Sort & Filter
+            <span className="hidden sm:inline">Sort & Filter</span>
+            <span className="sm:hidden">Filter</span>
           </button>
         </div>
         
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 self-start sm:self-auto">
           <button
             onClick={() => setViewMode('grid')}
             className={`p-2 rounded-lg transition-colors duration-300 ${
@@ -188,16 +184,14 @@ const TopArtists = () => {
             <FiList className="w-4 h-4" />
           </button>
         </div>
-      </div>
-
-      {/* Filters Panel */}
+      </div>      {/* Filters Panel */}
       {showFilters && (
-        <div className="mb-6 p-4 bg-white/5 rounded-2xl border border-white/10">
-          <div className="flex items-center gap-6">
-            <div>
+        <div className="mb-4 sm:mb-6 p-3 sm:p-4 bg-white/5 rounded-2xl border border-white/10">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
+            <div className="w-full sm:w-auto">
               <label className="block text-sm font-medium mb-2">Sort by</label>
               <select
-                className="bg-white/10 text-white px-3 py-2 rounded-lg border border-white/20 focus:border-purple-400 focus:outline-none"
+                className="w-full sm:w-auto bg-white/10 text-white px-3 py-2 rounded-lg border border-white/20 focus:border-purple-400 focus:outline-none text-sm"
                 value={sortBy}
                 onChange={e => setSortBy(e.target.value)}
               >
@@ -210,71 +204,11 @@ const TopArtists = () => {
           </div>
         </div>
       )}      {/* Artists Grid/List */}
-      {viewMode === 'grid' ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-8 auto-rows-fr">
-          {artists.map((artist, index) => (
-            <div key={artist.id} className="relative w-full">
-              <div className="absolute -top-3 -left-3 z-20">
-                {getRankIcon(index)}
-              </div>
-              <ArtistCard artist={artist} />
-            </div>
-          ))}
-        </div>
-      ) : (
-        <div className="space-y-2">
-          {artists.map((artist, index) => (
-            <div
-              key={artist.id}
-              className="group flex items-center gap-6 p-4 rounded-xl hover:bg-white/5 cursor-pointer transition-all duration-300"
-            >
-              {/* Rank */}
-              <div className="flex-shrink-0">
-                {getRankIcon(index)}
-              </div>
-              
-              {/* Artist Image */}
-              <div className="relative">
-                <img
-                  src={artist.picture_xl || artist.picture_big || '/api/placeholder/56/56'}
-                  alt={artist.name}
-                  className="w-14 h-14 rounded-full object-cover shadow-lg"
-                />
-                <div className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <HiPlay className="w-4 h-4 text-white ml-0.5" />
-                </div>
-              </div>
-              
-              {/* Artist Info */}
-              <div className="flex-1 min-w-0">
-                <h3 className="font-semibold text-lg truncate text-white group-hover:text-purple-400 transition-colors duration-300">
-                  {artist.name}
-                </h3>
-                <div className="flex items-center gap-4 text-sm text-gray-400">
-                  <span>{formatFollowers(artist.nb_fan)} followers</span>
-                  <span>•</span>
-                  <span>{artist.trackCount} chart tracks</span>
-                </div>
-              </div>
-              
-              {/* Genres */}
-              <div className="hidden md:flex items-center gap-2">
-                {artist.genres?.slice(0, 2).map((genre, i) => (
-                  <span key={i} className="px-2 py-1 bg-white/10 text-gray-300 text-xs rounded-full">
-                    {genre}
-                  </span>
-                ))}
-              </div>
-              
-              {/* Trending Indicator */}
-              <div className="flex items-center gap-2 text-sm text-gray-400">
-                <HiTrendingUp className="w-4 h-4" />
-                <span className="hidden sm:inline">Trending</span>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
+      <div className={`grid ${viewMode === 'grid' ? 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4 md:gap-6' : 'grid-cols-1 gap-3 sm:gap-4'}`}>
+        {artists.map((artist, i) => (
+          <ArtistCard key={artist.id || `artist-${i}`} artist={artist} index={i} />
+        ))}
+      </div>
     </div>  );
 };
 

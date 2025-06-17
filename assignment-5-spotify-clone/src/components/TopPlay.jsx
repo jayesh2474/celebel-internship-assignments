@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useGetTopChartsQuery } from '../redux/services/shazamCore';
 import { playPause, setActiveSong } from '../redux/features/playerSlice';
 import { HiPlay, HiPause, HiTrendingUp, HiSparkles, HiHeart } from 'react-icons/hi';
-import { FiMusic, FiTrendingUp } from 'react-icons/fi';
+import { FiMusic } from 'react-icons/fi';
 
 const TopPlay = () => {
   const dispatch = useDispatch();
@@ -171,7 +171,7 @@ const TopPlay = () => {
         <div className="flex items-center justify-between text-sm">
           <span className="text-gray-400">Made for you</span>
           <div className="flex items-center gap-1 text-green-400">
-            <FiTrendingUp className="w-4 h-4" />
+            <HiTrendingUp className="w-4 h-4" />
             <span className="font-medium">Trending</span>
           </div>
         </div>

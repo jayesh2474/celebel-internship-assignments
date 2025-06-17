@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-import { HiHome, HiChartBar, HiUserGroup, HiGlobeAlt, HiHeart, HiSearch, HiCollection } from 'react-icons/hi';
+import { HiHome, HiChartBar, HiUserGroup, HiGlobeAlt, HiHeart, HiSearch, HiCollection, HiX } from 'react-icons/hi';
 import { FiMusic, FiTrendingUp } from 'react-icons/fi';
 
 const links = [
@@ -16,27 +16,38 @@ const browseLinks = [
   { name: 'Trending', to: '/search/trending%20music', icon: FiTrendingUp },
 ];
 
-const Sidebar = () => {
+const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
   const navigate = useNavigate();
 
   const handleLikedSongs = () => {
     // Navigate to search with a query that might show popular songs
     navigate('/search/popular%20hits');
+    // Close sidebar on mobile after navigation
+    setSidebarOpen?.(false);
   };
 
   return (
-    <div className="fixed left-0 top-0 h-screen w-60 bg-gradient-to-b from-black to-gray-900 flex flex-col border-r border-white/5">
+    <div className={`fixed left-0 top-0 h-screen w-60 bg-gradient-to-b from-black to-gray-900 flex flex-col border-r border-white/5 z-50 transform transition-transform duration-300 ease-in-out lg:transform-none ${
+      sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+    }`}>
       {/* Logo */}
       <div className="p-6">
-        <h1 className="text-2xl font-bold text-white flex items-center gap-2">
-          <div className="w-8 h-8 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full flex items-center justify-center shadow-lg">
-            <FiMusic className="text-black text-lg" />
-          </div>
-          Spotify
-        </h1>
-      </div>
-
-      {/* Main Navigation */}
+        <div className="flex items-center justify-between">
+          <h1 className="text-2xl font-bold text-white flex items-center gap-2">
+            <div className="w-8 h-8 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full flex items-center justify-center shadow-lg">
+              <FiMusic className="text-black text-lg" />
+            </div>
+            Spotify
+          </h1>
+          {/* Close button for mobile */}
+          <button
+            onClick={() => setSidebarOpen?.(false)}
+            className="lg:hidden p-2 text-gray-400 hover:text-white transition-colors duration-300"
+          >
+            <HiX className="w-5 h-5" />
+          </button>
+        </div>
+      </div>      {/* Main Navigation */}
       <nav className="px-6 space-y-2">
         {links.map((link) => {
           const Icon = link.icon;
@@ -45,6 +56,7 @@ const Sidebar = () => {
             <NavLink
               key={link.name}
               to={link.to}
+              onClick={() => setSidebarOpen?.(false)}
               className={({ isActive }) =>
                 `flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300 text-gray-300 hover:text-white group ${
                   isActive 
@@ -76,14 +88,14 @@ const Sidebar = () => {
         <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4 flex items-center gap-2">
           <div className="w-4 h-0.5 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full"></div>
           Browse Music
-        </h3>
-        <nav className="space-y-1">
+        </h3>        <nav className="space-y-1">
           {browseLinks.map((link) => {
             const Icon = link.icon;
             return (
               <NavLink
                 key={link.name}
                 to={link.to}
+                onClick={() => setSidebarOpen?.(false)}
                 className={({ isActive }) =>
                   `flex items-center gap-3 px-3 py-2 rounded-xl transition-all duration-300 text-sm group ${
                     isActive 
@@ -106,8 +118,7 @@ const Sidebar = () => {
           <div className="w-4 h-0.5 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full"></div>
           Genres
         </h3>
-        <div className="space-y-1">
-          {[
+        <div className="space-y-1">          {[
             'Pop Music',
             'Hip-Hop',
             'Rock',
@@ -118,7 +129,10 @@ const Sidebar = () => {
           ].map((genre, index) => (
             <button
               key={index}
-              onClick={() => navigate(`/search/${encodeURIComponent(genre.toLowerCase())}`)}
+              onClick={() => {
+                navigate(`/search/${encodeURIComponent(genre.toLowerCase())}`);
+                setSidebarOpen?.(false);
+              }}
               className="block w-full text-left px-3 py-2 text-sm text-gray-400 hover:text-white transition-all duration-300 rounded-xl hover:bg-white/5 group"
             >
               <span className="group-hover:ml-1 transition-all duration-300">{genre}</span>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useGetSongsBySearchQuery, useGetGenresQuery } from '../redux/services/shazamCore';
 import SongCard from '../components/SongCard';
@@ -11,11 +11,13 @@ import { FiGrid, FiList, FiShuffle } from 'react-icons/fi';
 
 const Search = () => {
   const { term } = useParams();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { data, isFetching } = useGetSongsBySearchQuery(term);
   const { data: genres } = useGetGenresQuery();
   const { activeSong, isPlaying } = useSelector((state) => state.player);
   
+  const [searchTerm, setSearchTerm] = useState(term || '');
   const [selectedGenre, setSelectedGenre] = useState('');
   const [viewMode, setViewMode] = useState('grid');
   const [sortBy, setSortBy] = useState('relevance');
@@ -39,13 +41,19 @@ const Search = () => {
       dispatch(playPause(true));
     }
   };
-
   const handleShuffleAll = () => {
     if (filteredSongs && filteredSongs.length > 0) {
       const randomIndex = Math.floor(Math.random() * filteredSongs.length);
       const randomSong = filteredSongs[randomIndex];
       dispatch(setActiveSong({ song: randomSong, data: filteredSongs, index: randomIndex }));
       dispatch(playPause(true));
+    }
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchTerm.trim()) {
+      navigate(`/search/${searchTerm.trim()}`);
     }
   };
 
@@ -92,52 +100,80 @@ const Search = () => {
     { id: 'artists', label: 'Artists', count: mockArtists.length },
     { id: 'playlists', label: 'Playlists', count: 0 }
   ];
-
   return (
-    <div className="text-white">
-      {/* Header Section */}
-      <div className="mb-8">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="p-3 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl">
-            <HiSearch className="w-6 h-6 text-white" />
-          </div>
-          <div>
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-white via-green-200 to-green-400 bg-clip-text text-transparent">
-              Search Results
-            </h1>
-            <p className="text-gray-400 text-lg">
-              {filteredSongs?.length || 0} results for "<span className="text-white font-semibold">{term}</span>"
-            </p>
-          </div>
-        </div>
-
-        {/* Action Buttons */}
-        <div className="flex items-center gap-4">
-          <button
-            onClick={handleShuffleAll}
-            disabled={!filteredSongs?.length}
-            className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-400 hover:to-emerald-500 disabled:from-gray-600 disabled:to-gray-700 disabled:cursor-not-allowed rounded-full font-semibold transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-green-500/25"
-          >
-            <FiShuffle className="w-4 h-4" />
-            Shuffle Play
-          </button>
-          
-          <button
-            onClick={() => setShowFilters(!showFilters)}
-            className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-300 ${
-              showFilters || selectedGenre 
-                ? 'bg-white/20 text-white' 
-                : 'bg-white/5 hover:bg-white/10 text-gray-300'
-            }`}
-          >
-            <HiFilter className="w-4 h-4" />
-            Filters
-            {selectedGenre && (
-              <span className="ml-1 px-2 py-0.5 bg-green-500 text-black text-xs rounded-full">1</span>
+    <div className="flex flex-col text-white px-3 sm:px-4 md:px-8 max-w-7xl mx-auto w-full">
+      {/* Mobile Search Bar */}
+      <div className="mb-4 sm:mb-6">
+        <form onSubmit={handleSearch} className="relative">
+          <div className="relative">
+            <HiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Search for songs, artists, albums..."
+              className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-full text-white placeholder-gray-400 focus:outline-none focus:border-green-400 focus:bg-white/15 transition-all duration-300"
+            />
+            {searchTerm && (
+              <button
+                type="button"
+                onClick={() => setSearchTerm('')}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 p-1 text-gray-400 hover:text-white transition-colors"
+              >
+                <HiX className="w-4 h-4" />
+              </button>
             )}
-          </button>
+          </div>
+        </form>
+      </div>
 
-          <div className="flex items-center gap-2 ml-auto">
+      {/* Header Section */}
+      <div className="mb-4 sm:mb-6 md:mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-4">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="p-2 sm:p-3 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl">
+              <HiSearch className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+            </div>
+            <div>
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-white via-green-200 to-green-400 bg-clip-text text-transparent">
+                Search Results
+              </h1>
+              <p className="text-gray-400 text-sm sm:text-base lg:text-lg">
+                {filteredSongs?.length || 0} results for "<span className="text-white font-semibold">{term}</span>"
+              </p>
+            </div>
+          </div>
+        </div>        {/* Action Buttons */}
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+          <div className="flex items-center gap-2 sm:gap-4">
+            <button
+              onClick={handleShuffleAll}
+              disabled={!filteredSongs?.length}
+              className="flex items-center gap-1 sm:gap-2 px-3 py-2 sm:px-6 sm:py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-400 hover:to-emerald-500 disabled:from-gray-600 disabled:to-gray-700 disabled:cursor-not-allowed rounded-full font-semibold text-sm sm:text-base transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-green-500/25"
+            >
+              <FiShuffle className="w-4 h-4" />
+              <span className="hidden sm:inline">Shuffle Play</span>
+              <span className="sm:hidden">Shuffle</span>
+            </button>
+            
+            <button
+              onClick={() => setShowFilters(!showFilters)}
+              className={`flex items-center gap-1 sm:gap-2 px-3 py-2 sm:px-4 sm:py-2 rounded-full text-sm transition-all duration-300 ${
+                showFilters || selectedGenre 
+                  ? 'bg-white/20 text-white' 
+                  : 'bg-white/5 hover:bg-white/10 text-gray-300'
+              }`}
+            >
+              <HiFilter className="w-4 h-4" />
+              <span className="hidden sm:inline">Filters</span>
+              <span className="sm:hidden">Filter</span>
+              {selectedGenre && (
+                <span className="ml-1 px-2 py-0.5 bg-green-500 text-black text-xs rounded-full">1</span>
+              )}
+            </button>
+          </div>
+
+          <div className="flex items-center gap-2 self-start sm:ml-auto">
             <button
               onClick={() => setViewMode('grid')}
               className={`p-2 rounded-lg transition-colors duration-300 ${
@@ -151,8 +187,7 @@ const Search = () => {
               className={`p-2 rounded-lg transition-colors duration-300 ${
                 viewMode === 'list' ? 'bg-white/20 text-white' : 'text-gray-400 hover:text-white'
               }`}
-            >
-              <FiList className="w-4 h-4" />
+            >              <FiList className="w-4 h-4" />
             </button>
           </div>
         </div>
@@ -268,11 +303,10 @@ const Search = () => {
                   {filteredSongs.length} tracks found
                 </span>
               )}
-            </div>            {filteredSongs && filteredSongs.length > 0 ? (
-              <div className={`${
+            </div>            <div className={`${
                 viewMode === 'grid' 
-                  ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-8 auto-rows-fr' 
-                  : 'space-y-4'
+                  ? 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6' 
+                  : 'grid-cols-1 gap-4'
               }`}>
                 {filteredSongs.map((song, i) => (
                   <div key={song.key || `song-${i}-${song.title || 'untitled'}`} className="w-full">
@@ -284,23 +318,6 @@ const Search = () => {
                   </div>
                 ))}
               </div>
-            ) : (
-              <div className="text-center py-12">
-                <div className="w-16 h-16 bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <HiSearch className="w-8 h-8 text-gray-400" />
-                </div>
-                <h3 className="text-xl font-semibold mb-2">No songs found</h3>
-                <p className="text-gray-400 mb-4">
-                  Try adjusting your search or filters
-                </p>
-                <button
-                  onClick={clearFilters}
-                  className="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors duration-300"
-                >
-                  Clear filters
-                </button>
-              </div>
-            )}
           </div>
         )}
 
