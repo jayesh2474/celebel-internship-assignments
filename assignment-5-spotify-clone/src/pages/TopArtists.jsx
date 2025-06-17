@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { useGetTopChartsQuery } from '../redux/services/shazamCore';
 import ArtistCard from '../components/ArtistCard';
 import Loader from '../components/Loader';
-import { HiStar, HiTrendingUp, HiSparkles, HiUsers, HiPlay } from 'react-icons/hi';
+import { HiStar, HiSparkles, HiUsers, HiPlay } from 'react-icons/hi';
 import { FiGrid, FiList, FiFilter } from 'react-icons/fi';
 
 const TopArtists = () => {
