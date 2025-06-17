@@ -1,11 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { HiPlay, HiPause } from 'react-icons/hi';
-import { HiVolumeUp, HiVolumeOff } from 'react-icons/hi';
-import { HiHeart, HiOutlineHeart } from 'react-icons/hi';
-import { HiSwitchHorizontal } from 'react-icons/hi';
-import { HiViewList } from 'react-icons/hi';
-import { HiDeviceMobile } from 'react-icons/hi';
+import { HiPlay, HiPause, HiVolumeUp, HiVolumeOff, HiHeart, HiOutlineHeart } from 'react-icons/hi';
+import { FiShuffle, FiRepeat, FiSkipBack, FiSkipForward, FiList, FiMonitor, FiMaximize2 } from 'react-icons/fi';
 import { setActiveSong, playPause } from '../redux/features/playerSlice';
 
 const MusicPlayer = () => {
@@ -16,8 +12,7 @@ const MusicPlayer = () => {
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [repeat, setRepeat] = useState(false);
-  const [shuffle, setShuffle] = useState(false);
-  const [isLiked, setIsLiked] = useState(false);
+  const [shuffle, setShuffle] = useState(false);  const [isLiked, setIsLiked] = useState(false);
   const [showVolume, setShowVolume] = useState(false);
   const [shuffledSongs, setShuffledSongs] = useState([]);
 
@@ -135,7 +130,6 @@ const MusicPlayer = () => {
 
   const handleLike = () => {
     setIsLiked(!isLiked);
-    // Here you can add functionality to save liked songs
   };
 
   const handleShuffle = () => {
@@ -149,73 +143,127 @@ const MusicPlayer = () => {
   if (!activeSong?.title) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-[#181818] border-t border-[#282828] p-4 z-50">
-      <div className="flex items-center justify-between max-w-[2000px] mx-auto">
-        {/* Left section - Song info */}
-        <div className="flex items-center space-x-4 w-[30%]">
-          <img
-            src={activeSong?.images?.coverart || activeSong?.images?.background}
-            alt={activeSong?.title}
-            className="w-14 h-14 rounded-md"
-          />
-          <div className="flex flex-col">
-            <h4 className="text-white font-medium truncate">{activeSong?.title}</h4>
-            <p className="text-gray-400 text-sm truncate">{activeSong?.subtitle}</p>
+    <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-black via-gray-900/95 to-gray-900/90 backdrop-blur-xl border-t border-white/10 z-50">
+      {/* Progress Bar at Top */}
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gray-700/50">
+        <div 
+          className="h-full bg-gradient-to-r from-green-400 to-emerald-500 transition-all duration-300 shadow-lg shadow-green-500/20"
+          style={{ width: `${(currentTime / duration) * 100}%` }}
+        />
+        <input
+          type="range"
+          value={currentTime}
+          min="0"
+          max={duration || 0}
+          onChange={handleSeek}
+          className="absolute top-0 w-full h-full opacity-0 cursor-pointer"
+        />
+      </div>
+
+      <div className="flex items-center justify-between px-6 py-4">
+        {/* Left Section - Song Info with Enhanced Design */}
+        <div className="flex items-center space-x-4 w-[30%] min-w-[200px]">
+          <div className="relative group">
+            <img
+              src={activeSong?.images?.coverart || activeSong?.images?.background || activeSong?.album?.cover_medium || '/api/placeholder/56/56'}
+              alt={activeSong?.title}
+              className="w-14 h-14 rounded-lg shadow-lg group-hover:scale-105 transition-transform duration-300"
+            />
+            <div className="absolute inset-0 bg-black/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+              <FiMaximize2 className="w-4 h-4 text-white" />
+            </div>
           </div>
+          
+          <div className="flex flex-col min-w-0 flex-1">
+            <h4 className="text-white font-semibold truncate hover:text-green-400 cursor-pointer transition-colors duration-300">
+              {activeSong?.title}
+            </h4>
+            <p className="text-gray-400 text-sm truncate hover:text-gray-300 cursor-pointer transition-colors duration-300">
+              {activeSong?.subtitle || activeSong?.artist?.name || 'Unknown Artist'}
+            </p>
+          </div>
+          
           <button 
             onClick={handleLike}
-            className="text-gray-400 hover:text-white transition-colors"
+            className="p-2 rounded-full hover:bg-white/10 transition-all duration-300 hover:scale-110"
           >
-            {isLiked ? <HiHeart className="w-5 h-5 text-spotifyGreen" /> : <HiOutlineHeart className="w-5 h-5" />}
+            {isLiked ? (
+              <HiHeart className="w-5 h-5 text-red-500" />
+            ) : (
+              <HiOutlineHeart className="w-5 h-5 text-gray-400 hover:text-red-400" />
+            )}
           </button>
         </div>
 
-        {/* Center section - Player controls */}
-        <div className="flex flex-col items-center w-[40%]">
-          <div className="flex items-center space-x-6 mb-2">
+        {/* Center Section - Enhanced Player Controls */}
+        <div className="flex flex-col items-center w-[40%] max-w-[600px]">
+          <div className="flex items-center space-x-6 mb-3">
             <button 
               onClick={handleShuffle}
-              className={`text-gray-400 hover:text-white transition-colors ${shuffle ? 'text-spotifyGreen' : ''}`}
+              className={`p-2 rounded-full transition-all duration-300 hover:scale-110 ${
+                shuffle 
+                  ? 'text-green-400 bg-green-400/10' 
+                  : 'text-gray-400 hover:text-white hover:bg-white/10'
+              }`}
+              title="Shuffle"
             >
-              <HiSwitchHorizontal className="w-5 h-5" />
+              <FiShuffle className="w-4 h-4" />
             </button>
+            
             <button 
               onClick={handlePrevSong}
-              className="text-gray-400 hover:text-white transition-colors"
+              className="p-2 text-gray-400 hover:text-white transition-all duration-300 hover:scale-110 hover:bg-white/10 rounded-full"
+              title="Previous"
             >
-              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z" />
-              </svg>
+              <FiSkipBack className="w-5 h-5" />
             </button>
+            
             <button 
               onClick={handlePlayPause}
-              className="bg-white text-black p-2 rounded-full hover:scale-110 transition-transform"
+              className="bg-white hover:bg-gray-200 text-black p-3 rounded-full transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-white/25"
+              title={isPlaying ? 'Pause' : 'Play'}
             >
-              {isPlaying ? <HiPause className="w-6 h-6" /> : <HiPlay className="w-6 h-6" />}
+              {isPlaying ? (
+                <HiPause className="w-6 h-6" />
+              ) : (
+                <HiPlay className="w-6 h-6 ml-0.5" />
+              )}
             </button>
+            
             <button 
               onClick={handleNextSong}
-              className="text-gray-400 hover:text-white transition-colors"
+              className="p-2 text-gray-400 hover:text-white transition-all duration-300 hover:scale-110 hover:bg-white/10 rounded-full"
+              title="Next"
             >
-              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z" />
-              </svg>
+              <FiSkipForward className="w-5 h-5" />
             </button>
+            
             <button 
               onClick={handleRepeat}
-              className={`text-gray-400 hover:text-white transition-colors ${repeat ? 'text-spotifyGreen' : ''}`}
+              className={`p-2 rounded-full transition-all duration-300 hover:scale-110 ${
+                repeat 
+                  ? 'text-green-400 bg-green-400/10' 
+                  : 'text-gray-400 hover:text-white hover:bg-white/10'
+              }`}
+              title="Repeat"
             >
-              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z" />
-              </svg>
+              <FiRepeat className="w-4 h-4" />
             </button>
           </div>
-          <div className="flex items-center space-x-2 w-full">
-            <span className="text-gray-400 text-xs">{formatTime(currentTime)}</span>
-            <div className="relative w-full h-1 bg-gray-600 rounded-full">
+          
+          {/* Progress Bar */}
+          <div className="flex items-center space-x-3 w-full">
+            <span className="text-gray-400 text-xs font-mono min-w-[35px]">
+              {formatTime(currentTime)}
+            </span>
+            <div className="relative flex-1 h-2 bg-gray-700/50 rounded-full group">
               <div 
-                className="absolute h-full bg-spotifyGreen rounded-full"
+                className="absolute h-full bg-gradient-to-r from-green-400 to-emerald-500 rounded-full transition-all duration-300 shadow-lg shadow-green-500/20"
                 style={{ width: `${(currentTime / duration) * 100}%` }}
+              />
+              <div 
+                className="absolute w-3 h-3 bg-white rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform -translate-y-0.5"
+                style={{ left: `${(currentTime / duration) * 100}%`, marginLeft: '-6px' }}
               />
               <input
                 type="range"
@@ -226,41 +274,74 @@ const MusicPlayer = () => {
                 className="absolute w-full h-full opacity-0 cursor-pointer"
               />
             </div>
-            <span className="text-gray-400 text-xs">{formatTime(duration)}</span>
+            <span className="text-gray-400 text-xs font-mono min-w-[35px]">
+              {formatTime(duration)}
+            </span>
           </div>
         </div>
 
-        {/* Right section - Volume and queue */}
-        <div className="flex items-center justify-end space-x-4 w-[30%]">
-          <button className="text-gray-400 hover:text-white transition-colors">
-            <HiViewList className="w-5 h-5" />
+        {/* Right Section - Enhanced Controls */}
+        <div className="flex items-center justify-end space-x-2 w-[30%] min-w-[200px]">
+          <button 
+            className="p-2 text-gray-400 hover:text-white transition-all duration-300 hover:scale-110 hover:bg-white/10 rounded-full"
+            title="Queue"
+          >
+            <FiList className="w-4 h-4" />
           </button>
-          <button className="text-gray-400 hover:text-white transition-colors">
-            <HiDeviceMobile className="w-5 h-5" />
+          
+          <button 
+            className="p-2 text-gray-400 hover:text-white transition-all duration-300 hover:scale-110 hover:bg-white/10 rounded-full"
+            title="Connect to device"
+          >
+            <FiMonitor className="w-4 h-4" />
           </button>
+          
+          {/* Enhanced Volume Control */}
           <div className="relative group">
             <button 
-              onClick={() => setShowVolume(!showVolume)}
-              className="text-gray-400 hover:text-white transition-colors"
+              onMouseEnter={() => setShowVolume(true)}
+              onMouseLeave={() => setShowVolume(false)}
+              className="p-2 text-gray-400 hover:text-white transition-all duration-300 hover:scale-110 hover:bg-white/10 rounded-full"
+              title={`Volume ${Math.round(volume * 100)}%`}
             >
-              {volume === 0 ? <HiVolumeOff className="w-5 h-5" /> : <HiVolumeUp className="w-5 h-5" />}
+              {volume === 0 ? (
+                <HiVolumeOff className="w-4 h-4" />
+              ) : (
+                <HiVolumeUp className="w-4 h-4" />
+              )}
             </button>
+            
             {showVolume && (
-              <div className="absolute bottom-10 right-0 bg-[#282828] p-2 rounded-md">
-                <input
-                  type="range"
-                  min="0"
-                  max="1"
-                  step="0.01"
-                  value={volume}
-                  onChange={(e) => setVolume(parseFloat(e.target.value))}
-                  className="w-24 h-1 bg-gray-600 rounded-lg appearance-none cursor-pointer"
-                />
+              <div className="absolute bottom-12 right-0 bg-gray-900/95 backdrop-blur-md border border-white/10 rounded-xl p-3 shadow-2xl">
+                <div className="flex items-center space-x-3">
+                  <HiVolumeOff className="w-4 h-4 text-gray-400" />
+                  <div className="relative w-24 h-2 bg-gray-700 rounded-full">
+                    <div 
+                      className="absolute h-full bg-gradient-to-r from-green-400 to-emerald-500 rounded-full"
+                      style={{ width: `${volume * 100}%` }}
+                    />
+                    <input
+                      type="range"
+                      min="0"
+                      max="1"
+                      step="0.01"
+                      value={volume}
+                      onChange={(e) => setVolume(parseFloat(e.target.value))}
+                      className="absolute w-full h-full opacity-0 cursor-pointer"
+                    />
+                  </div>
+                  <HiVolumeUp className="w-4 h-4 text-gray-400" />
+                </div>
+                <div className="text-center mt-2 text-xs text-gray-400">
+                  {Math.round(volume * 100)}%
+                </div>
               </div>
             )}
           </div>
         </div>
       </div>
+
+      {/* Audio Element */}
       <audio
         ref={audioRef}
         src={activeSong?.preview}
@@ -268,6 +349,7 @@ const MusicPlayer = () => {
         onLoadedMetadata={handleLoadedMetadata}
         onEnded={handleNextSong}
         loop={repeat}
+        preload="metadata"
       />
     </div>
   );
