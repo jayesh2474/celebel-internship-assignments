@@ -5,7 +5,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const deezerApi = createApi({
   reducerPath: "deezerApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:5000/deezer",
+    baseUrl: "https://celebel-internship-assignments-2.onrender.com/deezer",
   }),
   endpoints: (builder) => ({
     getTopCharts: builder.query({
@@ -36,7 +36,9 @@ export const deezerApi = createApi({
         while (tracks.length === 0 && nextUrl && tries < 3) {
           // Remove Deezer's domain from nextUrl for proxy
           const nextPath = nextUrl.replace("https://api.deezer.com", "");
-          const res = await fetch(`http://localhost:5000/deezer${nextPath}`);
+          const res = await fetch(
+            `https://celebel-internship-assignments-2.onrender.com/deezer${nextPath}`
+          );
           const nextData = await res.json();
           tracks = nextData.data || [];
           nextUrl = nextData.next;
