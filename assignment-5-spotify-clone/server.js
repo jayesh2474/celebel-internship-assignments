@@ -49,6 +49,9 @@ app.get(/^\/deezer\/(.*)/, async (req, res) => {
     res.status(500).json({ error: "Failed to fetch from Deezer" });
   }
 });
+app.get("/", (req, res) => {
+  res.status(200).send("Backend is running 🚀");
+});
 
 app.listen(PORT, () => {
   console.log(`Proxy server running on http://localhost:${PORT}`);
