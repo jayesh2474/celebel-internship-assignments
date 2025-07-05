@@ -4,6 +4,7 @@ import { ArrowLeft, Lock, CheckCircle } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 
 const Checkout = () => {
+  // eslint-disable-next-line no-unused-vars
   const { items, total, itemCount, clearCart } = useCart();
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
@@ -29,6 +30,7 @@ const Checkout = () => {
     billingAddressSame: true
   });
 
+  // eslint-disable-next-line no-unused-vars
   const [orderComplete, setOrderComplete] = useState(false);
 
   const handleInputChange = (e) => {

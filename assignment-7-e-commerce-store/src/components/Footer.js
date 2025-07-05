@@ -29,20 +29,29 @@ const Footer = () => {
             </p>
             <div className="flex space-x-4">
               <a
-                href="#"
+                href="https://facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-gray-300 hover:text-white transition-colors"
+                aria-label="Facebook"
               >
                 <Facebook className="w-5 h-5" />
               </a>
               <a
-                href="#"
+                href="https://twitter.com"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-gray-300 hover:text-white transition-colors"
+                aria-label="Twitter"
               >
                 <Twitter className="w-5 h-5" />
               </a>
               <a
-                href="#"
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-gray-300 hover:text-white transition-colors"
+                aria-label="Instagram"
               >
                 <Instagram className="w-5 h-5" />
               </a>
@@ -101,44 +110,49 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">Customer Service</h3>
             <ul className="space-y-2">
               <li>
-                <a
-                  href="#"
-                  className="text-gray-300 hover:text-white transition-colors"
+                <button
+                  type="button"
+                  className="text-gray-300 hover:text-white transition-colors text-left"
+                  onClick={() => alert('Help Center - Coming Soon!')}
                 >
                   Help Center
-                </a>
+                </button>
               </li>
               <li>
-                <a
-                  href="#"
-                  className="text-gray-300 hover:text-white transition-colors"
+                <button
+                  type="button"
+                  className="text-gray-300 hover:text-white transition-colors text-left"
+                  onClick={() => alert('Shipping Info - Coming Soon!')}
                 >
                   Shipping Info
-                </a>
+                </button>
               </li>
               <li>
-                <a
-                  href="#"
-                  className="text-gray-300 hover:text-white transition-colors"
+                <button
+                  type="button"
+                  className="text-gray-300 hover:text-white transition-colors text-left"
+                  onClick={() => alert('Returns & Exchanges - Coming Soon!')}
                 >
                   Returns & Exchanges
-                </a>
+                </button>
               </li>
               <li>
-                <a
-                  href="#"
-                  className="text-gray-300 hover:text-white transition-colors"
+                <button
+                  type="button"
+                  className="text-gray-300 hover:text-white transition-colors text-left"
+                  onClick={() => alert('Size Guide - Coming Soon!')}
                 >
                   Size Guide
-                </a>
+                </button>
               </li>
               <li>
-                <a
-                  href="#"
-                  className="text-gray-300 hover:text-white transition-colors"
+                <button
+                  type="button"
+                  className="text-gray-300 hover:text-white transition-colors text-left"
+                  onClick={() => alert('Track Your Order - Coming Soon!')}
                 >
                   Track Your Order
-                </a>
+                </button>
               </li>
             </ul>
           </div>
@@ -172,24 +186,27 @@ const Footer = () => {
               <p>&copy; 2025 Jayesh Joshi ShopStore. All rights reserved.</p>
             </div>
             <div className="flex space-x-6">
-              <a
-                href="#"
+              <button
+                type="button"
                 className="text-gray-300 hover:text-white transition-colors text-sm"
+                onClick={() => alert('Privacy Policy - Coming Soon!')}
               >
                 Privacy Policy
-              </a>
-              <a
-                href="#"
+              </button>
+              <button
+                type="button"
                 className="text-gray-300 hover:text-white transition-colors text-sm"
+                onClick={() => alert('Terms of Service - Coming Soon!')}
               >
                 Terms of Service
-              </a>
-              <a
-                href="#"
+              </button>
+              <button
+                type="button"
                 className="text-gray-300 hover:text-white transition-colors text-sm"
+                onClick={() => alert('Cookie Policy - Coming Soon!')}
               >
                 Cookie Policy
-              </a>
+              </button>
             </div>
           </div>
         </div>

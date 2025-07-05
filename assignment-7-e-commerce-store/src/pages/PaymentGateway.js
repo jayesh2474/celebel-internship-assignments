@@ -5,6 +5,7 @@ import { useCart } from '../context/CartContext';
 
 const PaymentGateway = () => {
   const navigate = useNavigate();
+  // eslint-disable-next-line no-unused-vars
   const { total, itemCount, clearCart, items } = useCart();
   const [selectedMethod, setSelectedMethod] = useState('card');
   const [isProcessing, setIsProcessing] = useState(false);
