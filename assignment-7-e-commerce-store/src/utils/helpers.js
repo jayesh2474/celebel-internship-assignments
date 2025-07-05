@@ -3,12 +3,19 @@ export const cn = (...classes) => {
   return classes.filter(Boolean).join(' ');
 };
 
-// Format currency
+// Format currency for Indian Rupees
 export const formatCurrency = (amount) => {
-  return new Intl.NumberFormat('en-US', {
+  return new Intl.NumberFormat('en-IN', {
     style: 'currency',
-    currency: 'USD',
+    currency: 'INR',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
   }).format(amount);
+};
+
+// Format currency with custom symbol
+export const formatPrice = (amount) => {
+  return `₹${amount.toLocaleString('en-IN')}`;
 };
 
 // Generate unique ID

@@ -76,7 +76,7 @@ const Cart = () => {
                         {item.brand}
                       </p>
                       <p className="text-lg font-bold text-gray-800">
-                        ${item.price}
+                        ₹{item.price.toLocaleString('en-IN')}
                       </p>
                     </div>
 
@@ -108,7 +108,7 @@ const Cart = () => {
                       </div>
 
                       <p className="text-lg font-bold text-gray-800">
-                        ${(item.price * item.quantity).toFixed(2)}
+                        ₹{(item.price * item.quantity).toLocaleString('en-IN')}
                       </p>
                     </div>
                   </div>
@@ -128,7 +128,7 @@ const Cart = () => {
             <div className="space-y-3 mb-4">
               <div className="flex justify-between">
                 <span className="text-gray-600">Subtotal ({itemCount} items)</span>
-                <span className="font-semibold">${total.toFixed(2)}</span>
+                <span className="font-semibold">₹{total.toLocaleString('en-IN')}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-600">Shipping</span>
@@ -136,13 +136,13 @@ const Cart = () => {
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-600">Tax</span>
-                <span className="font-semibold">${(total * 0.08).toFixed(2)}</span>
+                <span className="font-semibold">₹{(total * 0.18).toLocaleString('en-IN')}</span>
               </div>
               <div className="border-t border-gray-200 pt-3">
                 <div className="flex justify-between">
                   <span className="text-lg font-bold text-gray-800">Total</span>
                   <span className="text-lg font-bold text-gray-800">
-                    ${(total * 1.08).toFixed(2)}
+                    ₹{(total * 1.18).toLocaleString('en-IN')}
                   </span>
                 </div>
               </div>
@@ -157,7 +157,7 @@ const Cart = () => {
 
             <div className="mt-4 text-center">
               <p className="text-sm text-gray-600">
-                Free shipping on orders over $50
+                Free shipping on orders over ₹4,000
               </p>
             </div>
           </div>

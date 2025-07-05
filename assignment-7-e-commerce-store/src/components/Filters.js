@@ -19,11 +19,11 @@ const Filters = ({ filters, onFilterChange, onClearFilters }) => {
   };
 
   const priceRanges = [
-    { label: 'Under $50', min: 0, max: 50 },
-    { label: '$50 - $100', min: 50, max: 100 },
-    { label: '$100 - $200', min: 100, max: 200 },
-    { label: '$200 - $300', min: 200, max: 300 },
-    { label: 'Over $300', min: 300, max: Infinity },
+    { label: 'Under ₹5,000', min: 0, max: 5000 },
+    { label: '₹5,000 - ₹10,000', min: 5000, max: 10000 },
+    { label: '₹10,000 - ₹20,000', min: 10000, max: 20000 },
+    { label: '₹20,000 - ₹30,000', min: 20000, max: 30000 },
+    { label: 'Over ₹30,000', min: 30000, max: Infinity },
   ];
 
   const ratings = [4, 3, 2, 1];

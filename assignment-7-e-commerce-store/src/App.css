@@ -3,6 +3,62 @@
   text-align: left;
 }
 
+/* Line clamp utilities */
+.line-clamp-1 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2563eb;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #1d4ed8;
+}
+
+/* Indian color theme */
+.bg-saffron {
+  background-color: #ff9933;
+}
+
+.bg-green-india {
+  background-color: #138808;
+}
+
+.text-saffron {
+  color: #ff9933;
+}
+
+.text-green-india {
+  color: #138808;
+}
+
+/* Rupee symbol styling */
+.rupee-symbol {
+  font-weight: 600;
+  color: #059669;
+}
+
 /* Custom animations */
 @keyframes fadeIn {
   from {

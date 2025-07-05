@@ -1,6 +1,13 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Facebook, Twitter, Instagram, Mail, Phone, MapPin } from 'lucide-react';
+import React from "react";
+import { Link } from "react-router-dom";
+import {
+  Facebook,
+  Twitter,
+  Instagram,
+  Mail,
+  Phone,
+  MapPin,
+} from "lucide-react";
 
 const Footer = () => {
   return (
@@ -16,17 +23,27 @@ const Footer = () => {
               <span className="text-xl font-bold">ShopStore</span>
             </div>
             <p className="text-gray-300 mb-4">
-              Your one-stop destination for quality products at unbeatable prices. 
-              Shop with confidence and enjoy our exceptional customer service.
+              Your one-stop destination for quality products at unbeatable
+              prices. Shop with confidence and enjoy our exceptional customer
+              service.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-300 hover:text-white transition-colors">
+              <a
+                href="#"
+                className="text-gray-300 hover:text-white transition-colors"
+              >
                 <Facebook className="w-5 h-5" />
               </a>
-              <a href="#" className="text-gray-300 hover:text-white transition-colors">
+              <a
+                href="#"
+                className="text-gray-300 hover:text-white transition-colors"
+              >
                 <Twitter className="w-5 h-5" />
               </a>
-              <a href="#" className="text-gray-300 hover:text-white transition-colors">
+              <a
+                href="#"
+                className="text-gray-300 hover:text-white transition-colors"
+              >
                 <Instagram className="w-5 h-5" />
               </a>
             </div>
@@ -37,27 +54,42 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/" className="text-gray-300 hover:text-white transition-colors">
+                <Link
+                  to="/"
+                  className="text-gray-300 hover:text-white transition-colors"
+                >
                   Home
                 </Link>
               </li>
               <li>
-                <Link to="/products" className="text-gray-300 hover:text-white transition-colors">
+                <Link
+                  to="/products"
+                  className="text-gray-300 hover:text-white transition-colors"
+                >
                   Products
                 </Link>
               </li>
               <li>
-                <Link to="/cart" className="text-gray-300 hover:text-white transition-colors">
+                <Link
+                  to="/cart"
+                  className="text-gray-300 hover:text-white transition-colors"
+                >
                   Cart
                 </Link>
               </li>
               <li>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors">
+                <a
+                  href="#"
+                  className="text-gray-300 hover:text-white transition-colors"
+                >
                   About Us
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors">
+                <a
+                  href="#"
+                  className="text-gray-300 hover:text-white transition-colors"
+                >
                   Contact
                 </a>
               </li>
@@ -69,27 +101,42 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">Customer Service</h3>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors">
+                <a
+                  href="#"
+                  className="text-gray-300 hover:text-white transition-colors"
+                >
                   Help Center
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors">
+                <a
+                  href="#"
+                  className="text-gray-300 hover:text-white transition-colors"
+                >
                   Shipping Info
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors">
+                <a
+                  href="#"
+                  className="text-gray-300 hover:text-white transition-colors"
+                >
                   Returns & Exchanges
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors">
+                <a
+                  href="#"
+                  className="text-gray-300 hover:text-white transition-colors"
+                >
                   Size Guide
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors">
+                <a
+                  href="#"
+                  className="text-gray-300 hover:text-white transition-colors"
+                >
                   Track Your Order
                 </a>
               </li>
@@ -103,16 +150,16 @@ const Footer = () => {
               <div className="flex items-center space-x-3">
                 <MapPin className="w-5 h-5 text-blue-400 flex-shrink-0" />
                 <span className="text-gray-300">
-                  123 Commerce Street, Shopping District, NY 10001
+                  123 Bhuwana, Udaipur, Rajasthan, India 313001
                 </span>
               </div>
               <div className="flex items-center space-x-3">
                 <Phone className="w-5 h-5 text-blue-400 flex-shrink-0" />
-                <span className="text-gray-300">+1 (555) 123-4567</span>
+                <span className="text-gray-300">+91 9211 420420</span>
               </div>
               <div className="flex items-center space-x-3">
                 <Mail className="w-5 h-5 text-blue-400 flex-shrink-0" />
-                <span className="text-gray-300">support@shopstore.com</span>
+                <span className="text-gray-300">support@shopstore.in</span>
               </div>
             </div>
           </div>
@@ -122,16 +169,25 @@ const Footer = () => {
         <div className="border-t border-gray-700 mt-8 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="text-gray-300 mb-4 md:mb-0">
-              <p>&copy; 2025 ShopStore. All rights reserved.</p>
+              <p>&copy; 2025 Jayesh Joshi ShopStore. All rights reserved.</p>
             </div>
             <div className="flex space-x-6">
-              <a href="#" className="text-gray-300 hover:text-white transition-colors text-sm">
+              <a
+                href="#"
+                className="text-gray-300 hover:text-white transition-colors text-sm"
+              >
                 Privacy Policy
               </a>
-              <a href="#" className="text-gray-300 hover:text-white transition-colors text-sm">
+              <a
+                href="#"
+                className="text-gray-300 hover:text-white transition-colors text-sm"
+              >
                 Terms of Service
               </a>
-              <a href="#" className="text-gray-300 hover:text-white transition-colors text-sm">
+              <a
+                href="#"
+                className="text-gray-300 hover:text-white transition-colors text-sm"
+              >
                 Cookie Policy
               </a>
             </div>

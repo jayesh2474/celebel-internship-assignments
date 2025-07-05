@@ -16,7 +16,7 @@ const Checkout = () => {
     city: '',
     state: '',
     zipCode: '',
-    country: 'United States',
+    country: 'India',
     
     // Payment Information
     cardNumber: '',
@@ -69,8 +69,8 @@ const Checkout = () => {
     }, 2000);
   };
 
-  const tax = total * 0.08;
-  const shipping = total > 50 ? 0 : 9.99;
+  const tax = total * 0.18; // GST rate in India
+  const shipping = total > 4000 ? 0 : 500;
   const finalTotal = total + tax + shipping;
 
   if (items.length === 0 && !orderComplete) {
@@ -257,7 +257,7 @@ const Checkout = () => {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      ZIP Code
+                      PIN Code
                     </label>
                     <input
                       type="text"
@@ -267,6 +267,19 @@ const Checkout = () => {
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                       required
                     />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Country
+                    </label>
+                    <select
+                      name="country"
+                      value={formData.country}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                      <option value="India">India</option>
+                    </select>
                   </div>
                 </div>
               </div>
@@ -418,7 +431,7 @@ const Checkout = () => {
                     <p className="text-sm text-gray-600">Qty: {item.quantity}</p>
                   </div>
                   <span className="text-sm font-medium text-gray-800">
-                    ${(item.price * item.quantity).toFixed(2)}
+                    ₹{(item.price * item.quantity).toLocaleString('en-IN')}
                   </span>
                 </div>
               ))}
@@ -427,23 +440,23 @@ const Checkout = () => {
             <div className="border-t border-gray-200 pt-4 space-y-2">
               <div className="flex justify-between text-sm">
                 <span className="text-gray-600">Subtotal ({itemCount} items)</span>
-                <span className="font-medium">${total.toFixed(2)}</span>
+                <span className="font-medium">₹{total.toLocaleString('en-IN')}</span>
               </div>
               <div className="flex justify-between text-sm">
                 <span className="text-gray-600">Shipping</span>
                 <span className="font-medium">
-                  {shipping === 0 ? 'Free' : `$${shipping.toFixed(2)}`}
+                  {shipping === 0 ? 'Free' : `₹${shipping.toLocaleString('en-IN')}`}
                 </span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-gray-600">Tax</span>
-                <span className="font-medium">${tax.toFixed(2)}</span>
+                <span className="text-gray-600">GST (18%)</span>
+                <span className="font-medium">₹{tax.toLocaleString('en-IN')}</span>
               </div>
               <div className="border-t border-gray-200 pt-2">
                 <div className="flex justify-between">
                   <span className="text-lg font-bold text-gray-800">Total</span>
                   <span className="text-lg font-bold text-gray-800">
-                    ${finalTotal.toFixed(2)}
+                    ₹{finalTotal.toLocaleString('en-IN')}
                   </span>
                 </div>
               </div>

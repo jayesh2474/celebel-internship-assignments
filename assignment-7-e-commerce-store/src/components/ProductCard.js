@@ -67,11 +67,11 @@ const ProductCard = ({ product, viewMode = 'grid' }) => {
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-2">
                 <span className="text-xl font-bold text-gray-800">
-                  ${product.price}
+                  ₹{product.price.toLocaleString('en-IN')}
                 </span>
                 {product.originalPrice > product.price && (
                   <span className="text-sm text-gray-500 line-through">
-                    ${product.originalPrice}
+                    ₹{product.originalPrice.toLocaleString('en-IN')}
                   </span>
                 )}
               </div>
@@ -158,11 +158,11 @@ const ProductCard = ({ product, viewMode = 'grid' }) => {
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center space-x-2">
             <span className="text-xl font-bold text-gray-800">
-              ${product.price}
+              ₹{product.price.toLocaleString('en-IN')}
             </span>
             {product.originalPrice > product.price && (
               <span className="text-sm text-gray-500 line-through">
-                ${product.originalPrice}
+                ₹{product.originalPrice.toLocaleString('en-IN')}
               </span>
             )}
           </div>

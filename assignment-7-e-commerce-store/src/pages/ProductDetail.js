@@ -110,12 +110,12 @@ const ProductDetail = () => {
 
             <div className="flex items-center space-x-4 mb-6">
               <span className="text-3xl font-bold text-gray-800">
-                ${product.price}
+                ₹{product.price.toLocaleString('en-IN')}
               </span>
               {product.originalPrice > product.price && (
                 <>
                   <span className="text-xl text-gray-500 line-through">
-                    ${product.originalPrice}
+                    ₹{product.originalPrice.toLocaleString('en-IN')}
                   </span>
                   <span className="bg-red-100 text-red-800 px-2 py-1 rounded text-sm font-medium">
                     {Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}% OFF
@@ -208,7 +208,7 @@ const ProductDetail = () => {
           <div className="border border-gray-200 rounded-lg p-4 space-y-3">
             <div className="flex items-center space-x-3">
               <Truck className="w-5 h-5 text-green-600" />
-              <span className="text-sm text-gray-700">Free shipping on orders over $50</span>
+              <span className="text-sm text-gray-700">Free shipping on orders over ₹4,000</span>
             </div>
             <div className="flex items-center space-x-3">
               <Shield className="w-5 h-5 text-blue-600" />
@@ -287,8 +287,8 @@ const ProductDetail = () => {
             <div>
               <h4 className="font-semibold text-gray-800 mb-4">Shipping Information</h4>
               <div className="space-y-3 text-gray-700">
-                <p>• Free standard shipping on orders over $50</p>
-                <p>• Express shipping available for $9.99</p>
+                <p>• Free standard shipping on orders over ₹4,000</p>
+                <p>• Express shipping available for ₹500</p>
                 <p>• Processing time: 1-2 business days</p>
                 <p>• Standard delivery: 3-7 business days</p>
                 <p>• Express delivery: 1-3 business days</p>
@@ -320,7 +320,7 @@ const ProductDetail = () => {
                   </h3>
                   <div className="flex items-center justify-between">
                     <span className="text-lg font-bold text-gray-800">
-                      ${relatedProduct.price}
+                      ₹{relatedProduct.price.toLocaleString('en-IN')}
                     </span>
                     <div className="flex items-center">
                       {renderStars(relatedProduct.rating)}
