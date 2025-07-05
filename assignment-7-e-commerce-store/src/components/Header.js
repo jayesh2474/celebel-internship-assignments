@@ -41,6 +41,12 @@ const Header = ({ onSearch, searchTerm }) => {
             <Link to="/products" className="text-gray-700 hover:text-blue-600 transition-colors">
               Products
             </Link>
+            <Link to="/about" className="text-gray-700 hover:text-blue-600 transition-colors">
+              About
+            </Link>
+            <Link to="/contact" className="text-gray-700 hover:text-blue-600 transition-colors">
+              Contact
+            </Link>
             <Link to="/cart" className="relative">
               <ShoppingCart className="w-6 h-6 text-gray-700 hover:text-blue-600 transition-colors" />
               {itemCount > 0 && (
@@ -49,9 +55,9 @@ const Header = ({ onSearch, searchTerm }) => {
                 </span>
               )}
             </Link>
-            <button className="text-gray-700 hover:text-blue-600 transition-colors">
+            <Link to="/account" className="text-gray-700 hover:text-blue-600 transition-colors">
               <User className="w-6 h-6" />
-            </button>
+            </Link>
           </nav>
 
           {/* Mobile Menu Button */}
@@ -100,6 +106,20 @@ const Header = ({ onSearch, searchTerm }) => {
                 Products
               </Link>
               <Link
+                to="/about"
+                className="text-gray-700 hover:text-blue-600 transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                About
+              </Link>
+              <Link
+                to="/contact"
+                className="text-gray-700 hover:text-blue-600 transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Contact
+              </Link>
+              <Link
                 to="/cart"
                 className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors"
                 onClick={() => setIsMenuOpen(false)}
@@ -107,10 +127,14 @@ const Header = ({ onSearch, searchTerm }) => {
                 <ShoppingCart className="w-5 h-5" />
                 <span>Cart ({itemCount})</span>
               </Link>
-              <button className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors">
+              <Link
+                to="/account"
+                className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
                 <User className="w-5 h-5" />
                 <span>Account</span>
-              </button>
+              </Link>
             </nav>
           </div>
         )}

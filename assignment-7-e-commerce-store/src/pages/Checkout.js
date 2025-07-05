@@ -61,14 +61,6 @@ const Checkout = () => {
     setCurrentStep(prev => prev - 1);
   };
 
-  const handlePlaceOrder = () => {
-    // Simulate order processing
-    setTimeout(() => {
-      setOrderComplete(true);
-      clearCart();
-    }, 2000);
-  };
-
   const tax = total * 0.18; // GST rate in India
   const shipping = total > 4000 ? 0 : 500;
   const finalTotal = total + tax + shipping;
@@ -399,13 +391,13 @@ const Checkout = () => {
                   Next
                 </button>
               ) : (
-                <button
-                  onClick={handlePlaceOrder}
+                <Link
+                  to="/payment"
                   className="flex items-center space-x-2 bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 font-medium"
                 >
                   <Lock className="w-4 h-4" />
-                  <span>Place Order</span>
-                </button>
+                  <span>Proceed to Payment</span>
+                </Link>
               )}
             </div>
           </div>
